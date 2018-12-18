@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Java相关面试问题 | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="Xingyu Liu"><meta name="keywords" content="sjaak van den berg, svdb, bitcoin, crypto, payment, integration, bitcoins, wordpress, betaling, webshop, front end, design, ontwerp, developer"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="160x160" href="/images/favicon-160x160.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png"><meta name="msapplication-TileColor" content="#121315"><meta name="msapplication-TileImage" content="/images/mstile-144x144.png"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><a href="/"><img src="/images/svdb.png" alt="Hexo" title="Hexo"></a><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/" alt="Home" title="Home" itemprop="url">Home</a></li><li itemprop="name"><a href="/articles" alt="Articles" title="Articles" itemprop="url">Articles</a></li><li itemprop="name"><a href="/about" alt="About" title="About" itemprop="url">About</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline">Java相关面试问题</h1><span class="post-meta">Published on<time itemprop="datePublished" datetime="2018-01-26T23:58:48.000Z"> Friday, January 26th 2018 at 15:58</time><br>Last updated on<time itemprop="dateModified" datetime="2018-01-26T23:58:48.000Z"> Monday, December 17th 2018 at 21:17</time></span><h2 id="最近看到了一些Java面试相关的问题，原链接：Java面试问题"><a href="#最近看到了一些Java面试相关的问题，原链接：Java面试问题" class="headerlink" title="最近看到了一些Java面试相关的问题，原链接：Java面试问题"></a>最近看到了一些Java面试相关的问题，原链接：<a href="https://hit-alibaba.github.io/interview/Android/Java/Questions.html" title="Java面试问题" target="_blank" rel="noopener">Java面试问题</a></h2><p>挖个坑，准备自己答一遍</p>
+<h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><ol>
+<li>垃圾回收机制。。。(主要从下面几方面解答 GC原理、最好画图解释一下年轻代（Eden区和Survival区）、年老代、比例分配及为啥要这样分代回收)</li>
+<li>对象分配问题，堆栈里的问题，详细的会问道方法区、堆、程序计数器、本地方法栈、虚拟机栈，问题入口从String a,new String(“”)开始</li>
+<li>关键字，private protected public static final 组合着问</li>
+<li>Object类里面有哪几种方法，作用</li>
+<li>equals 和 hashCode方法，重写equals的原则()</li>
+<li>向上转型</li>
+<li>Java引用类型(强引用，软引用，弱引用，虚引用)</li>
+<li>线程相关的，主要是volitate，synchorized，wait()，notify()，notifyAll()，join()</li>
+<li>Exception和Error</li>
+<li>反射的用途</li>
+<li>HashMap实现原理(数组+链表)，查找数据的时间复杂度</li>
+<li>List有哪些子类，各有什么区别</li>
+<li>NIO相关，缓冲区、通道、selector。。。(不熟，面了这么多，挂在这里。其实主要是表现在同步阻塞和异步，传输方式不同。标准IO无法实现非阻塞模式、文件锁、读选择、分散聚集等)</li>
+<li>内存泄露，举个例子</li>
+<li>OOM是怎么出现的，有哪几块JVM区域会产生OOM，如何解决(对于该问题，建议去《Java特种兵》的3.6章)</li>
+<li>Java里面的观察者模式实现</li>
+<li>单例实现(我一般用enum写，不容易被挑毛病)</li>
+<li>用Java模拟一个栈，并能够做到扩容，并且能有同步锁。（用数组实现）</li>
+<li>Java泛型机制，泛型机制的优点，以及类型变量</li>
+</ol>
+</article></main></body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>笔记：Regular Expression 正则表达式 | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="Xingyu Liu"><meta name="keywords" content="sjaak van den berg, svdb, bitcoin, crypto, payment, integration, bitcoins, wordpress, betaling, webshop, front end, design, ontwerp, developer"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="160x160" href="/images/favicon-160x160.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png"><meta name="msapplication-TileColor" content="#121315"><meta name="msapplication-TileImage" content="/images/mstile-144x144.png"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><a href="/"><img src="/images/svdb.png" alt="Hexo" title="Hexo"></a><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/" alt="Home" title="Home" itemprop="url">Home</a></li><li itemprop="name"><a href="/articles" alt="Articles" title="Articles" itemprop="url">Articles</a></li><li itemprop="name"><a href="/about" alt="About" title="About" itemprop="url">About</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline">笔记：Regular Expression 正则表达式</h1><span class="post-meta">Published on<time itemprop="datePublished" datetime="2018-01-11T07:05:03.000Z"> Wednesday, January 10th 2018 at 23:05</time><br>Last updated on<time itemprop="dateModified" datetime="2018-01-11T07:05:03.000Z"> Monday, December 17th 2018 at 21:17</time></span><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>正则表达式（Regular Expression， 缩写 RegEx）是一种语法描述了字符串的匹配模式，使用正则表达式可以轻松地从一段很长的字符串中匹配出自己想要的部分。 在写Python爬虫（各种编程语言都可以用）的时候，遇到一大段比较复杂的HTML文本，需要洗掉不需要的内容，就可以用正则表达式来筛选出自己要的信息，所以掌握它最重要的是能够总结出自己想要的信息的pattern, 然后用语法表达出来。刚开始学习时，一些不常用的语法确实很容易遗忘，熟能生巧吧。</p>
+<h2 id="使用Python"><a href="#使用Python" class="headerlink" title="使用Python"></a>使用Python</h2><p>如果像我一样使用Python来练习的话，就会用到Python的<code>re</code>模块。别忘了在文件的顶端引入Python的内置模块：<code>import re</code></p>
+<h2 id="最简单的使用"><a href="#最简单的使用" class="headerlink" title="最简单的使用"></a>最简单的使用</h2><p>最简单的匹配就是定义一个pattern，然后寻找这个pattern是不是在我们的字符串中，与Python中<code>in</code>的用法差不多。 比如我们有一个字符串为”one two three”，我们要判断”one”和”four”是不是在它之中存在。调用re的search()函数来搜寻：</p>
+<pre><code>import re
+
+myString = &quot;one two three&quot;
+pattern1 = &quot;one&quot;
+pattern2 = &quot;four&quot;
+# re.search(pattern, string, flags=0)用法： pattern 是要匹配的模式， string是原来的字符串, flags标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。
+print(re.search(pattern1, myString))
+print(re.search(pattern2, myString))
+</code></pre><p><strong>输出结果为:</strong> &lt;_sre.SRE_Match object; span=(0, 3), match=’one’&gt; None pattern1会成功在myString中匹配到，打印出来一些看起来很奇怪的东西，其实是一个匹配对象，这个对象包含了匹配的结果，稍后会介绍如果使用这个对象。 pattern2由于”four”并不是myString的一部分，所以返回None</p>
+<h2 id="匹配对象（Match-Object）"><a href="#匹配对象（Match-Object）" class="headerlink" title="匹配对象（Match Object）"></a>匹配对象（Match Object）</h2><p>简单来说匹配对象就是使用正则表达式后返回的结果，如果返回的是None，说明没有匹配到东西。如果不是None，我们可以调用它的一些函数来得到想要的信息。</p>
+<h3 id="start-和-end"><a href="#start-和-end" class="headerlink" title="start() 和 end()"></a>start() 和 end()</h3><p>顾名思义，它们分别返回匹配到部分开始和结束的index：</p>
+<pre><code>myString = &quot;one two three one&quot;
+pattern1 = &quot;one&quot;
+matchObject = re.search(pattern1, myString)
+print(&quot;start index:&quot;, matchObject.start())
+print(&quot;end index:&quot;, matchObject.end())
+</code></pre><p><strong>输出结果为:</strong> start index: 0 end index: 3</p>
+<h2 id="定义匹配规则"><a href="#定义匹配规则" class="headerlink" title="定义匹配规则"></a>定义匹配规则</h2><p>在前面的例子中，我们尝试的匹配的pattern只是一个字符串，相当于判断是不是substring, 比较固定。但如果我们要匹配的东西比较灵活呢？我们就需要定义一个规则，符合这个规则的都能给我们匹配到。 注意：正则表达式前都要加’r’来表示这是一个正则表达式，而不是普通的字符串。</p>
+<hr>
+<h3 id="方括号’-‘里面放可以被匹配到的的字符"><a href="#方括号’-‘里面放可以被匹配到的的字符" class="headerlink" title="方括号’[]‘里面放可以被匹配到的的字符"></a><em>方括号’[]‘里面放可以被匹配到的的字符</em></h3><p>比如一个字符串可能包含”dog”或者”dag”,那么我们可以使用表达式<code>r&quot;d[oa]g&quot;</code>来匹配，因为不确定’d’和’g’中间是什么，我们就把’o’和’a’都放进方括号里，表示他们都是可以被匹配到的。 示例代码：</p>
+<pre><code>myString1 = &quot;dog&quot;
+myString2 = &quot;dag&quot;
+myString3 = &quot;dig&quot;
+# 匹配 dag 或 dog
+pattern = r&quot;d[ao]g&quot;
+print(re.search(pattern, myString1))
+print(re.search(pattern, myString2))
+print(re.search(pattern, myString3))
+</code></pre><p><strong>输出结果为：</strong> &lt;_sre.SRE_Match object; span=(0, 3), match=’dog’&gt; &lt;_sre.SRE_Match object; span=(0, 3), match=’dag’&gt; None 除此之外，’[]‘里可以放一个范围内的字符: ‘[a-z]‘:所有小写字母 ‘[A-Z]‘:所有大写字母 ‘[0-9]‘:0到9的数字 也可以把它们组合起来使用，示例代码：</p>
+<pre><code>myString = &quot;1234a&quot;
+# 最后一位为任意小写字母
+pattern1 = r&quot;1234[a-z]&quot;
+# 最后一位为大写字母 (无法匹配到)
+pattern2 = r&quot;1234[A-Z]&quot;
+# 中间一位为数字
+pattern3 = r&quot;12[0-9]4a&quot;
+# 最后为数字和小写字母组合
+pattern4 = r&quot;123[0-9][a-z]&quot;
+print(re.search(pattern1, myString))
+print(re.search(pattern2, myString))
+print(re.search(pattern3, myString))
+print(re.search(pattern4, myString))
+</code></pre><p><strong>输出结果为：</strong> &lt;_sre.SRE_Match object; span=(0, 5), match=’1234a’&gt; None &lt;_sre.SRE_Match object; span=(0, 5), match=’1234a’&gt; &lt;_sre.SRE_Match object; span=(0, 5), match=’1234a’&gt;</p>
+<hr>
+<h3 id="特殊类型"><a href="#特殊类型" class="headerlink" title="特殊类型"></a><em>特殊类型</em></h3><p>除了普通的字符外，正则表达式的规则里有一些特殊的类型，可以直接用在表达式中。 <code>\d</code>: 任何数字 <code>\D</code>: 不是数字 <code>\s</code>: 任何空白， 如[\t\n\r\f\v] <code>\S</code>: 不是空白 <code>\b</code>: 空白字符 <code>\w</code>: 任何大小写字母, 数字和 “” [a-zA-Z0-9] <code>\W</code>: 不是 \w <code>\b</code>: 空白字符 (只在某个字的开头或结尾) <code>\B</code>: 空白字符 (不在某个字的开头或结尾) <code>\\</code>: 匹配 \ <code>.</code>: 匹配任何字符 (除了 \n) <code>^</code>: 匹配开头 <code>$</code>: 匹配结尾 <code>?</code>: 前面的字符可有可无 使用这些特殊类型的示例代码 （为了方便看结果，把匹配的结果放在每一行后面的注释里了）：</p>
+<pre><code># 匹配任何数字    使用\d
+print(re.search(r&quot;\d&quot;, &quot;abc1&quot;)) #结果: span=(3, 4), match=&apos;1&apos;
+
+# 匹配不是数字    使用\D
+print(re.search(r&quot;\D&quot;, &quot;111a&quot;)) #结果: span=(3, 4), match=&apos;a&apos;
+
+# 匹配任何空白    使用\s
+print(re.search(r&quot;\s&quot;, &quot;space  &quot;)) #结果: span=(5, 6), match=&apos; &apos;
+
+# 匹配任何空白    使用\s
+print(re.search(r&quot;\s&quot;, &quot;space\t&quot;)) #结果: span=(5, 6), match=&apos;\t&apos;
+
+# 匹配任何空白    使用\s
+print(re.search(r&quot;\s&quot;, &quot;space\n&quot;)) #结果: span=(1, 2), match=&apos;a&apos;
+
+# 匹配不是空白    使用\S
+print(re.search(r&quot;\S&quot;, &quot;\ta\t&quot;)) #结果: span=(1, 2), match=&apos;a&apos;
+
+# 匹配任何大小写字母, 数字和 “” [a-zA-Z0-9] 使用\w
+print(re.search(r&quot;\w&quot;, &quot;@@@@1###&quot;)) #结果: span=(4, 5), match=&apos;1&apos;
+
+# 匹配和\w相反   \W
+print(re.search(r&quot;\W&quot;, &quot;123@abc&quot;)) #结果: span=(3, 4), match=&apos;@&apos;
+
+# 匹配空白字符(只在某个字的开头或结尾)   使用\b
+print(re.search(r&quot;\bhello\b&quot;, &quot; hello &quot;)) #结果: span=(1, 6), match=&apos;hello&apos;
+
+# 匹配空白字符(不在某个字的开头或结尾)   使用\B
+print(re.search(r&quot;\BHELLO\B&quot;, &quot; aaHELLOaa &quot;)) #结果：span=(3, 8), match=&apos;HELLO&apos;
+print(re.search(r&quot;\BHELLO\B&quot;, &quot; HELLO &quot;)) #结果：None
+
+# 匹配\   使用\\
+print(re.search(r&quot;\\&quot;, &quot;\slash&quot;)) #结果: span=(0, 1), match=&apos;\\&apos;
+
+# 匹配任何字符(除了\n)  使用.
+print(re.search(r&quot;.ell.&quot;, &quot;123hello123&quot;)) #结果: span=(3, 8), match=&apos;hello&apos;
+
+# 匹配开头  使用^
+print(re.search(r&quot;^start&quot;, &quot;startANDend&quot;)) #结果: span=(0, 5), match=&apos;start&apos;
+print(re.search(r&quot;^end&quot;, &quot;startANDend&quot;)) #结果: None
+
+# 匹配结尾  使用$
+print(re.search(r&quot;end$&quot;, &quot;startANDend&quot;)) #结果: span=(8, 11), match=&apos;end&apos;
+print(re.search(r&quot;start$&quot;, &quot;startANDend&quot;)) #结果: None
+
+# 前面的字符可有可无 使用?
+print(re.search(r&quot;Hello?World&quot;, &quot;HelloWorld&quot;)) #结果: span=(0, 10), match=&apos;HelloWorld&apos;
+print(re.search(r&quot;(Hello)?World&quot;, &quot;World&quot;)) #结果: span=(0, 5), match=&apos;World&apos;
+</code></pre><hr>
+<h3 id="多次匹配"><a href="#多次匹配" class="headerlink" title="多次匹配"></a><em>多次匹配</em></h3><p>有的时候，我们希望一个匹配规则能够多匹配几次，因为重复写规则太费时费力了。而且有的情况下，我们也不知道我们需要多少，只要是符合的都匹配到。 <code>*</code>: 重复零次或者更多 <code>+</code>: 重复至少一次或者更多 <code>{n}</code>: 重复n次 <code>{n, m}</code>: 重复n到m次 示例代码：</p>
+<pre><code>print(re.search(r&quot;123(ab)*&quot;, &quot;123&quot;)) #结果：span=(0, 3), match=&apos;123&apos;
+print(re.search(r&quot;123(ab)+&quot;, &quot;123abab&quot;)) #结果：span=(0, 7), match=&apos;123abab&apos;
+print(re.search(r&quot;123(ab)+&quot;, &quot;123&quot;)) #结果：None
+print(re.search(r&quot;123(ab){3}&quot;, &quot;123abababab&quot;)) #结果：span=(0, 9), match=&apos;123ababab&apos;
+print(re.search(r&quot;123(ab){1,5}&quot;, &quot;123abababab&quot;)) #结果： span=(0, 11), match=&apos;123abababab&apos;
+</code></pre><hr>
+<h3 id="分组"><a href="#分组" class="headerlink" title="_分组_"></a>_分组_</h3><p>在从一个字符串中提取信息时，我们可能需要的不止一段信息，比如一个字符串中包含了姓名、年龄和性别。我们并不需要匹配三次，只需要在一次匹配中使用正则表达式的分组，每个匹配规则放在<code>()</code>中表示这是一个组。</p>
+<pre><code>match = re.search(r&quot;Name:(\w+), Age:(\d+), Gender:(\w+)&quot;, &quot;Name:Rex, Age:22, Gender:Male&quot;)
+print(match.group(1))
+print(match.group(2))
+print(match.group(3))
+</code></pre><p>我们也可以给每个匹配的组起一个名字来方便查找，在括号里使用<code>?P&lt;想要的名字&gt;</code>：</p>
+<pre><code>match = re.search(r&quot;Name:(?P&lt;姓名&gt;\w+), Age:(?P&lt;年龄&gt;\d+), Gender:(?P&lt;性别&gt;\w+)&quot;, &quot;Name:Rex, Age:22, Gender:Male&quot;)
+print(match.group(&apos;姓名&apos;))
+print(match.group(&apos;年龄&apos;))
+print(match.group(&apos;性别&apos;))
+</code></pre><p><strong>输出结果为：</strong> Rex 22 Male</p>
+<h2 id="re模块中其他有用的函数"><a href="#re模块中其他有用的函数" class="headerlink" title="re模块中其他有用的函数"></a>re模块中其他有用的函数</h2><h3 id="findall"><a href="#findall" class="headerlink" title="findall()"></a><em>findall()</em></h3><p>前面使用的都是<code>search()</code>函数，它仅仅返回匹配到的第一个结果。为了得到所有结果，可以使用<code>findall()</code>函数，它返回一个list，存放着所有的结果：</p>
+<pre><code># 从一堆字母中找到所有数字
+result = re.findall(r&quot;\d+&quot;, &quot;aaa1bb2ccc3ddd123&quot;) #结果：[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;123&apos;]
+print(result)
+</code></pre><h3 id="sub"><a href="#sub" class="headerlink" title="sub()"></a><em>sub()</em></h3><p>我们可以使用正则表达式匹配到想要的部分，同时可以使用<code>sub()</code>进行替换操作</p>
+<pre><code># 把&quot;xxx&quot; 变成 &quot;Hello&quot;
+# 第二个参数为想要替换成的东西 
+print(re.sub(r&quot;x+&quot;, &quot;Hello&quot;, &quot;xxx World&quot;)) #结果：Hello World
+</code></pre><h3 id="split"><a href="#split" class="headerlink" title="split()"></a><em>split()</em></h3><p>很简单，根据匹配规则分割，返回一个list</p>
+<pre><code># 分割
+print(re.split(r&quot;[@#!]&quot;, &quot;aa@bb#cc!dd&quot;)) #结果：[&apos;aa&apos;, &apos;bb&apos;, &apos;cc&apos;, &apos;dd&apos;] 
+</code></pre><h3 id="compile"><a href="#compile" class="headerlink" title="compile()"></a><em>compile()</em></h3><p>为了方便复用正则表达式，我们可以把正则表达式通过<code>compile()</code>编译成一个对象，然后用这个对象来进行别的操作。</p>
+<pre><code># 匹配数字
+regEx = re.compile(r&quot;\d+&quot;)
+print(regEx.search(&quot;aaaaaa123bbbbb&quot;)) #结果：span=(6, 9), match=&apos;123&apos;
+print(regEx.search(&quot;bbbbb234cccc&quot;)) #结果：span=(5, 8), match=&apos;234&apos;
+</code></pre><h2 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h2><p>本文是莫烦Python教程的学习笔记，原链接：<a href="http://https://morvanzhou.github.io/tutorials/python-basic/basic/13-10-regular-expression/" title="莫烦Python-正则表达式" target="_blank" rel="noopener">莫烦Python-正则表达式</a> 顺便推荐一下他的网站，非常适合Python基础入门和Machine Learning</p>
+</article></main></body></html>

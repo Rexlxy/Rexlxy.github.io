@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>How to do composite keys in JPA entity | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="Xingyu Liu"><meta name="keywords" content="sjaak van den berg, svdb, bitcoin, crypto, payment, integration, bitcoins, wordpress, betaling, webshop, front end, design, ontwerp, developer"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="160x160" href="/images/favicon-160x160.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png"><meta name="msapplication-TileColor" content="#121315"><meta name="msapplication-TileImage" content="/images/mstile-144x144.png"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><a href="/"><img src="/images/svdb.png" alt="Hexo" title="Hexo"></a><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/" alt="Home" title="Home" itemprop="url">Home</a></li><li itemprop="name"><a href="/articles" alt="Articles" title="Articles" itemprop="url">Articles</a></li><li itemprop="name"><a href="/about" alt="About" title="About" itemprop="url">About</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline">How to do composite keys in JPA entity</h1><span class="post-meta">Published on<time itemprop="datePublished" datetime="2018-07-03T06:20:16.000Z"> Monday, July 2nd 2018 at 23:20</time><br>Last updated on<time itemprop="dateModified" datetime="2018-07-03T06:20:16.000Z"> Monday, December 17th 2018 at 20:56</time></span><h3 id="Issue"><a href="#Issue" class="headerlink" title="Issue"></a>Issue</h3><p>In our new project, we have composite keys in some tables. I searched about how to map composite key in JPA entity.</p>
+<hr>
+<h3 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h3><p>Basically, we need to have another class representing the combination of the IDs. Then, use annotation @EmbeddedId in the entity class and @Embeddable in composite key class.</p>
+<hr>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>For example, we need to identify a Type name with a certain language as unique. Then we use <strong>type id</strong> and <strong>language id</strong> as the composite key. <em>BTW, How to create table with composite key in database (PostgreSQL):</em></p>
+<pre><code>CREATE TABLE IF NOT EXISTS tb_type_with_language {
+    type_id integer reference tb_types (type_id),
+    language_id integer reference tb_languages (language_id),
+    primary key (type_id, language_id),
+
+    description varchar,
+    name varchar
+}
+</code></pre><p>The composite key class, <strong>TypeLanguagePK</strong> (need to implement Serializable):</p>
+<pre><code>@Data
+@Embeddable
+@NoArgsConstructor
+public class TypeLanguagePK implements Serializable {
+
+    @ManyToOne
+    @JoinColumn(name = &quot;type_id&quot;)
+    private Type type;
+
+    @ManyToOne
+    @JoinColumn(name=&quot;language_id&quot;)
+    private Language language;
+
+}
+</code></pre><p>And go back to the entity we want, <strong>TypeWithLanguage</strong>:</p>
+<pre><code>@Data
+@Entity
+@Table(name = &quot;tb_type_with_language&quot;)
+public class TypeWithLanguage {
+
+    @EmbeddedId
+    private TypeLanguagePK id;
+
+    @Column(&quot;name&quot;)
+    private String name;
+
+    @Column(&quot;description&quot;)
+    private String description;
+
+}
+</code></pre></article></main></body></html>

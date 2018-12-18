@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="Xingyu Liu"><meta name="keywords" content="sjaak van den berg, svdb, bitcoin, crypto, payment, integration, bitcoins, wordpress, betaling, webshop, front end, design, ontwerp, developer"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="160x160" href="/images/favicon-160x160.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png"><meta name="msapplication-TileColor" content="#121315"><meta name="msapplication-TileImage" content="/images/mstile-144x144.png"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><a href="/"><img src="/images/svdb.png" alt="Hexo" title="Hexo"></a><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/" alt="Home" title="Home" itemprop="url">Home</a></li><li itemprop="name"><a href="/articles" alt="Articles" title="Articles" itemprop="url">Articles</a></li><li itemprop="name"><a href="/about" alt="About" title="About" itemprop="url">About</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline">For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation</h1><span class="post-meta">Published on<time itemprop="datePublished" datetime="2018-02-17T02:40:10.000Z"> Friday, February 16th 2018 at 18:40</time><br>Last updated on<time itemprop="dateModified" datetime="2018-02-17T02:40:10.000Z"> Monday, December 17th 2018 at 20:56</time></span><h3 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h3><p>Few weeks ago, I was trying to develop some functions of an auto-reply robot for Wechat (a chatting app). One idea of mine was combining Python web-crawler with the auto-reply function. In that way, the robot could gain infinite possibilities on its functions. The first one I thought of was subway navigation.</p>
+<hr>
+<h3 id="PREPARATIONS"><a href="#PREPARATIONS" class="headerlink" title="PREPARATIONS"></a>PREPARATIONS</h3><h4 id="1-Modules-needed"><a href="#1-Modules-needed" class="headerlink" title="1. Modules needed:"></a>1. Modules needed:</h4><pre><code>from selenium import webdriver
+from bs4 import BeautifulSoup
+</code></pre><h4 id="2-Know-how-to-use-BeautifulSoup"><a href="#2-Know-how-to-use-BeautifulSoup" class="headerlink" title="2. Know how to use BeautifulSoup"></a>2. Know how to use BeautifulSoup</h4><p><a href="https://medium.freecodecamp.org/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe" title="How to scrape websites with Python and BeautifulSoup" target="_blank" rel="noopener">How to scrape websites with Python and BeautifulSoup</a></p>
+<hr>
+<h3 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h3><h4 id="1-Find-a-website-provides-subway-navigation-info-I-want"><a href="#1-Find-a-website-provides-subway-navigation-info-I-want" class="headerlink" title="1. Find a website provides subway navigation info I want"></a>1. Find a website provides subway navigation info I want</h4><p>The website I choose is: <a href="http://bj.bendibao.com/ditie/hc/" target="_blank" rel="noopener">http://bj.bendibao.com/ditie/hc/</a> (In Chineses). It enables users to enter names of origin and destination stations. Then, it resturns the detailed navigation info. The website looks like: <img src="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium1.png" alt=""></p>
+<h4 id="2-Open-the-web-page-through-the-Selenium"><a href="#2-Open-the-web-page-through-the-Selenium" class="headerlink" title="2. Open the web page through the Selenium"></a>2. Open the web page through the Selenium</h4><p>The <code>Selenium</code> module can simulate human usages of the browser. If you use the correct webdriver for your browser, you will see that the browser opens automatically after you run the script. But here, for the efficiency, I choose to use <code>PhantomJS</code> which runs everything in background. The code to open the webpage:</p>
+<pre><code>browser = webdriver.PhantomJS()
+browser.get(&apos;http://bj.bendibao.com/ditie/hc/&apos;)
+</code></pre><h4 id="3-Use-developer-mode-of-Chrome-to-find-origin-and-destination-input-box"><a href="#3-Use-developer-mode-of-Chrome-to-find-origin-and-destination-input-box" class="headerlink" title="3. Use developer mode of Chrome to find origin and destination input box"></a>3. Use developer mode of Chrome to find origin and destination input box</h4><p>The hotkey <code>F12</code> will help us exam elements on the webpage. Hanging the mouse over elements we want, we can see the source code: <img src="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium2.png" alt=""> In this example, I can use class name to identify elements I want.</p>
+<h4 id="4-Fill-input-boxes-and-search"><a href="#4-Fill-input-boxes-and-search" class="headerlink" title="4. Fill input boxes and search"></a>4. Fill input boxes and search</h4><p>In this step, we use the webdriver to ‘type in’ origin and destination stations, then click the button to search.</p>
+<pre><code># fill the input box for starting point
+start_input = browser.find_element_by_class_name(&apos;start&apos;)
+start_input.send_keys(origin)
+# fill the input box for destination 
+end_input = browser.find_element_by_class_name(&quot;end&quot;)
+end_input.send_keys(destination)
+# Click the search button
+search_button = browser.find_element_by_class_name(&apos;btn&apos;)
+search_button.click()
+</code></pre><p>After that, we can use <code>browser.page_source</code> to get source code of the result page.</p>
+<h4 id="5-User-BeautifulSoup-to-collect-infomation-we-need"><a href="#5-User-BeautifulSoup-to-collect-infomation-we-need" class="headerlink" title="5. User BeautifulSoup to collect infomation we need"></a>5. User BeautifulSoup to collect infomation we need</h4><p>This the simplest task for the BeautifulSoup module which sorts out tags according to names, id or attributes.</p>
+<hr>
+<h3 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h3><pre><code>from selenium import webdriver
+from bs4 import BeautifulSoup
+
+# parse the html page
+def parsePage(page):
+    output = &quot;&quot;
+    soup = BeautifulSoup(page, &apos;html.parser&apos;)
+    result = soup.find_all(&quot;div&quot;, {&quot;class&quot;:&quot;search-result&quot;})[0]
+    # get the header
+    headOne = result.find_all(&apos;h1&apos;)
+    # if the result page doesn&apos;t contain the header we want
+    # which means not result
+    if not headOne:
+        return &quot;Searching failed! Check the correctness of station name&quot;
+    headOne = headOne[0]
+    output = output + headOne.get_text() +&quot;:\n&quot;
+    lineList = result.find_all(&apos;table&apos;)[0]
+    allTr = lineList.find_all(&apos;tr&apos;)
+    for tr in allTr:
+        #  if the table dvision is station name
+        station = tr.find_all(&apos;td&apos;, {&quot;class&quot;:&quot;station-name&quot;})
+        if station:
+            output = output + &quot;Station:&quot; + station[0].get_text() + &quot;\n&quot;
+        else:
+            line = tr.find_all(&apos;td&apos;, {&quot;class&quot;:&quot;line-name&quot;})
+            # if the table division is line name
+            if line:
+                output = output + &quot;Line:&quot; + line[0].get_text() + &quot;\n&quot;
+            else:
+                changeStation = tr.find_all(&apos;td&apos;, {&quot;class&quot;:&quot;change-station&quot;})
+                # if the table division is transfer station
+                if changeStation:
+                    output = output + &quot;Transfer Station:&quot; + changeStation[0].get_text() + &quot;\n&quot;
+                else:
+                    print(&quot;Nothing found&quot;)
+    # statistic info
+    result_info = result.find_all(&apos;div&apos;, {&quot;class&quot;:&quot;result-info&quot;})[0]
+    return output + result_info.get_text()
+
+def searchSubway(origin, destination):
+    browser = webdriver.PhantomJS()
+    browser.get(&apos;http://bj.bendibao.com/ditie/hc/&apos;)
+    # fill the input box for starting point
+    start_input = browser.find_element_by_class_name(&apos;start&apos;)
+    start_input.send_keys(origin)
+    # fill the input box for destination 
+    end_input = browser.find_element_by_class_name(&quot;end&quot;)
+    end_input.send_keys(destination)
+    # Clikc the search button
+    search_button = browser.find_element_by_class_name(&apos;btn&apos;)
+    search_button.click()
+    return parsePage(browser.page_source)
+
+# test
+print(searchSubway(&quot;大望路&quot;, &quot;望京&quot;))
+</code></pre><hr>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>The result will looks like:</p>
+<pre><code>从 大望路 到 望京西 换乘方案:
+Station:大望路
+Line:地铁14号线东段 (7站)
+Transfer Station:望京
+Line:地铁15号线(M15) (1站)
+Station:望京西
+途径 8站|预计时间 26分钟|票价 5.00元
+</code></pre><p>hmmmmm, translation:</p>
+<pre><code>The plan from Dawanglu to Wangjing West
+Station: Dawanglu
+Line: Metro Line 14 East Section (7 stations)
+Transfer Station: Wangjing
+Line: Metro Line 15 (1 station)
+Station: Wangjing West
+Pass by: 8 stations | Estimated time: 26 minutes | Ticket Price: 5 yuan
+</code></pre></article></main></body></html>

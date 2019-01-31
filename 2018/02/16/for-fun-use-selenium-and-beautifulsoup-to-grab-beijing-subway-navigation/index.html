@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="WHYFew weeks ago, I was trying to develop some functions of an auto-reply robot for Wechat (a chatting app). One idea of mine was combining Python web-crawler with the auto-reply function. In that way">
+<meta name="keywords" content="Python,Selenium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation">
+<meta property="og:url" content="http://yoursite.com/2018/02/16/for-fun-use-selenium-and-beautifulsoup-to-grab-beijing-subway-navigation/index.html">
+<meta property="og:site_name" content="Rex&#39;s Blog">
+<meta property="og:description" content="WHYFew weeks ago, I was trying to develop some functions of an auto-reply robot for Wechat (a chatting app). One idea of mine was combining Python web-crawler with the auto-reply function. In that way">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium1.png">
+<meta property="og:image" content="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium2.png">
+<meta property="og:updated_time" content="2019-01-16T03:38:26.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation">
+<meta name="twitter:description" content="WHYFew weeks ago, I was trying to develop some functions of an auto-reply robot for Wechat (a chatting app). One idea of mine was combining Python web-crawler with the auto-reply function. In that way">
+<meta name="twitter:image" content="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/16/for-fun-use-selenium-and-beautifulsoup-to-grab-beijing-subway-navigation/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation | Rex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/for-fun-use-selenium-and-beautifulsoup-to-grab-beijing-subway-navigation/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xingyu Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/pig.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">For fun: use Selenium and BeautifulSoup to grab Beijing subway navigation
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-16 18:40:10" itemprop="dateCreated datePublished" datetime="2018-02-16T18:40:10-08:00">2018-02-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-01-15 19:38:26" itemprop="dateModified" datetime="2019-01-15T19:38:26-08:00">2019-01-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h3><p>Few weeks ago, I was trying to develop some functions of an auto-reply robot for Wechat (a chatting app). One idea of mine was combining Python web-crawler with the auto-reply function. In that way, the robot could gain infinite possibilities on its functions. The first one I thought of was subway navigation.</p>
+<a id="more"></a>
+<hr>
+<h3 id="PREPARATIONS"><a href="#PREPARATIONS" class="headerlink" title="PREPARATIONS"></a>PREPARATIONS</h3><h4 id="1-Modules-needed"><a href="#1-Modules-needed" class="headerlink" title="1. Modules needed:"></a>1. Modules needed:</h4><pre><code>from selenium import webdriver
+from bs4 import BeautifulSoup
+</code></pre><h4 id="2-Know-how-to-use-BeautifulSoup"><a href="#2-Know-how-to-use-BeautifulSoup" class="headerlink" title="2. Know how to use BeautifulSoup"></a>2. Know how to use BeautifulSoup</h4><p><a href="https://medium.freecodecamp.org/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe" title="How to scrape websites with Python and BeautifulSoup" target="_blank" rel="noopener">How to scrape websites with Python and BeautifulSoup</a></p>
+<hr>
+<h3 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h3><h4 id="1-Find-a-website-provides-subway-navigation-info-I-want"><a href="#1-Find-a-website-provides-subway-navigation-info-I-want" class="headerlink" title="1. Find a website provides subway navigation info I want"></a>1. Find a website provides subway navigation info I want</h4><p>The website I choose is: <a href="http://bj.bendibao.com/ditie/hc/" target="_blank" rel="noopener">http://bj.bendibao.com/ditie/hc/</a> (In Chineses). It enables users to enter names of origin and destination stations. Then, it resturns the detailed navigation info. The website looks like: <img src="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium1.png" alt=""></p>
+<h4 id="2-Open-the-web-page-through-the-Selenium"><a href="#2-Open-the-web-page-through-the-Selenium" class="headerlink" title="2. Open the web page through the Selenium"></a>2. Open the web page through the Selenium</h4><p>The <code>Selenium</code> module can simulate human usages of the browser. If you use the correct webdriver for your browser, you will see that the browser opens automatically after you run the script. But here, for the efficiency, I choose to use <code>PhantomJS</code> which runs everything in background. The code to open the webpage:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">browser = webdriver.PhantomJS()</span><br><span class="line">browser.get(<span class="string">'http://bj.bendibao.com/ditie/hc/'</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-Use-developer-mode-of-Chrome-to-find-origin-and-destination-input-box"><a href="#3-Use-developer-mode-of-Chrome-to-find-origin-and-destination-input-box" class="headerlink" title="3. Use developer mode of Chrome to find origin and destination input box"></a>3. Use developer mode of Chrome to find origin and destination input box</h4><p>The hotkey <code>F12</code> will help us exam elements on the webpage. Hanging the mouse over elements we want, we can see the source code: <img src="http://blog.rexlxy.me/wp-content/uploads/2018/02/blog-Selenium2.png" alt=""> In this example, I can use class name to identify elements I want.</p>
+<h4 id="4-Fill-input-boxes-and-search"><a href="#4-Fill-input-boxes-and-search" class="headerlink" title="4. Fill input boxes and search"></a>4. Fill input boxes and search</h4><p>In this step, we use the webdriver to ‘type in’ origin and destination stations, then click the button to search.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fill the input box for starting point</span></span><br><span class="line">start_input = browser.find_element_by_class_name(<span class="string">'start'</span>)</span><br><span class="line">start_input.send_keys(origin)</span><br><span class="line"><span class="comment"># fill the input box for destination </span></span><br><span class="line">end_input = browser.find_element_by_class_name(<span class="string">"end"</span>)</span><br><span class="line">end_input.send_keys(destination)</span><br><span class="line"><span class="comment"># Click the search button</span></span><br><span class="line">search_button = browser.find_element_by_class_name(<span class="string">'btn'</span>)</span><br><span class="line">search_button.click()</span><br></pre></td></tr></table></figure></p>
+<p>After that, we can use <code>browser.page_source</code> to get source code of the result page.</p>
+<h4 id="5-User-BeautifulSoup-to-collect-infomation-we-need"><a href="#5-User-BeautifulSoup-to-collect-infomation-we-need" class="headerlink" title="5. User BeautifulSoup to collect infomation we need"></a>5. User BeautifulSoup to collect infomation we need</h4><p>This the simplest task for the BeautifulSoup module which sorts out tags according to names, id or attributes.</p>
+<hr>
+<h3 id="CODE"><a href="#CODE" class="headerlink" title="CODE"></a>CODE</h3><pre><code class="python"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver
+<span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+
+<span class="comment"># parse the html page</span>
+<span class="function"><span class="keyword">def</span> <span class="title">parsePage</span><span class="params">(page)</span>:</span>
+    output = <span class="string">""</span>
+    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)
+    result = soup.find_all(<span class="string">"div"</span>, {<span class="string">"class"</span>:<span class="string">"search-result"</span>})[<span class="number">0</span>]
+    <span class="comment"># get the header</span>
+    headOne = result.find_all(<span class="string">'h1'</span>)
+    <span class="comment"># if the result page doesn't contain the header we want</span>
+    <span class="comment"># which means not result</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> headOne:
+        <span class="keyword">return</span> <span class="string">"Searching failed! Check the correctness of station name"</span>
+    headOne = headOne[<span class="number">0</span>]
+    output = output + headOne.get_text() +<span class="string">":\n"</span>
+    lineList = result.find_all(<span class="string">'table'</span>)[<span class="number">0</span>]
+    allTr = lineList.find_all(<span class="string">'tr'</span>)
+    <span class="keyword">for</span> tr <span class="keyword">in</span> allTr:
+        <span class="comment">#  if the table dvision is station name</span>
+        station = tr.find_all(<span class="string">'td'</span>, {<span class="string">"class"</span>:<span class="string">"station-name"</span>})
+        <span class="keyword">if</span> station:
+            output = output + <span class="string">"Station:"</span> + station[<span class="number">0</span>].get_text() + <span class="string">"\n"</span>
+        <span class="keyword">else</span>:
+            line = tr.find_all(<span class="string">'td'</span>, {<span class="string">"class"</span>:<span class="string">"line-name"</span>})
+            <span class="comment"># if the table division is line name</span>
+            <span class="keyword">if</span> line:
+                output = output + <span class="string">"Line:"</span> + line[<span class="number">0</span>].get_text() + <span class="string">"\n"</span>
+            <span class="keyword">else</span>:
+                changeStation = tr.find_all(<span class="string">'td'</span>, {<span class="string">"class"</span>:<span class="string">"change-station"</span>})
+                <span class="comment"># if the table division is transfer station</span>
+                <span class="keyword">if</span> changeStation:
+                    output = output + <span class="string">"Transfer Station:"</span> + changeStation[<span class="number">0</span>].get_text() + <span class="string">"\n"</span>
+                <span class="keyword">else</span>:
+                    print(<span class="string">"Nothing found"</span>)
+    <span class="comment"># statistic info</span>
+    result_info = result.find_all(<span class="string">'div'</span>, {<span class="string">"class"</span>:<span class="string">"result-info"</span>})[<span class="number">0</span>]
+    <span class="keyword">return</span> output + result_info.get_text()
+
+<span class="function"><span class="keyword">def</span> <span class="title">searchSubway</span><span class="params">(origin, destination)</span>:</span>
+    browser = webdriver.PhantomJS()
+    browser.get(<span class="string">'http://bj.bendibao.com/ditie/hc/'</span>)
+    <span class="comment"># fill the input box for starting point</span>
+    start_input = browser.find_element_by_class_name(<span class="string">'start'</span>)
+    start_input.send_keys(origin)
+    <span class="comment"># fill the input box for destination </span>
+    end_input = browser.find_element_by_class_name(<span class="string">"end"</span>)
+    end_input.send_keys(destination)
+    <span class="comment"># Clikc the search button</span>
+    search_button = browser.find_element_by_class_name(<span class="string">'btn'</span>)
+    search_button.click()
+    <span class="keyword">return</span> parsePage(browser.page_source)
+
+<span class="comment"># test</span>
+print(searchSubway(<span class="string">"大望路"</span>, <span class="string">"望京"</span>))
+</code></pre>
+<hr>
+<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>The result will looks like:</p>
+<pre><code>从 大望路 到 望京西 换乘方案:
+Station:大望路
+Line:地铁14号线东段 (7站)
+Transfer Station:望京
+Line:地铁15号线(M15) (1站)
+Station:望京西
+途径 8站|预计时间 26分钟|票价 5.00元
+</code></pre><p>hmmmmm, translation:</p>
+<pre><code>The plan from Dawanglu to Wangjing West
+Station: Dawanglu
+Line: Metro Line 14 East Section (7 stations)
+Transfer Station: Wangjing
+Line: Metro Line 15 (1 station)
+Station: Wangjing West
+Pass by: 8 stations | Estimated time: 26 minutes | Ticket Price: 5 yuan
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Selenium/" rel="tag"># Selenium</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/16/Java/concerns-in-using-springmvc-mybatis/" rel="next" title="Concerns when using SpringMVC + MyBatis">
+                <i class="fa fa-chevron-left"></i> Concerns when using SpringMVC + MyBatis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/21/Diary/Irvine求职+近况/" rel="prev" title="Irvine求职+近况">
+                Irvine求职+近况 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/pig.jpg" alt="Xingyu Liu">
+            
+              <p class="site-author-name" itemprop="name">Xingyu Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#WHY"><span class="nav-number">1.</span> <span class="nav-text">WHY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PREPARATIONS"><span class="nav-number">2.</span> <span class="nav-text">PREPARATIONS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Modules-needed"><span class="nav-number">2.1.</span> <span class="nav-text">1. Modules needed:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Know-how-to-use-BeautifulSoup"><span class="nav-number">2.2.</span> <span class="nav-text">2. Know how to use BeautifulSoup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HOW"><span class="nav-number">3.</span> <span class="nav-text">HOW</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Find-a-website-provides-subway-navigation-info-I-want"><span class="nav-number">3.1.</span> <span class="nav-text">1. Find a website provides subway navigation info I want</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Open-the-web-page-through-the-Selenium"><span class="nav-number">3.2.</span> <span class="nav-text">2. Open the web page through the Selenium</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Use-developer-mode-of-Chrome-to-find-origin-and-destination-input-box"><span class="nav-number">3.3.</span> <span class="nav-text">3. Use developer mode of Chrome to find origin and destination input box</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Fill-input-boxes-and-search"><span class="nav-number">3.4.</span> <span class="nav-text">4. Fill input boxes and search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-User-BeautifulSoup-to-collect-infomation-we-need"><span class="nav-number">3.5.</span> <span class="nav-text">5. User BeautifulSoup to collect infomation we need</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CODE"><span class="nav-number">4.</span> <span class="nav-text">CODE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output"><span class="nav-number">5.</span> <span class="nav-text">Output</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xingyu Liu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

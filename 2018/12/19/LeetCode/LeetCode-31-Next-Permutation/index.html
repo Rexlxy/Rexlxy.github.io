@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这是LeetCode系列的第一篇博客，也在尝试改变自己做题的方法，知道解法不等于理解。特别是没做出来的题目，看了解法之后感叹“好神奇啊”，这种时候得静下心来细细分析了，并且尝试正推，想一想正着是如何推导出来的。  题目 31.Next PermutationImplement next permutation, which rearranges numbers into the lexicogra">
+<meta name="keywords" content="LeetCode,Binary Search">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 31. Next Permutation">
+<meta property="og:url" content="http://yoursite.com/2018/12/19/LeetCode/LeetCode-31-Next-Permutation/index.html">
+<meta property="og:site_name" content="Rex&#39;s Blog">
+<meta property="og:description" content="这是LeetCode系列的第一篇博客，也在尝试改变自己做题的方法，知道解法不等于理解。特别是没做出来的题目，看了解法之后感叹“好神奇啊”，这种时候得静下心来细细分析了，并且尝试正推，想一想正着是如何推导出来的。  题目 31.Next PermutationImplement next permutation, which rearranges numbers into the lexicogra">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-16T03:38:26.281Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LeetCode 31. Next Permutation">
+<meta name="twitter:description" content="这是LeetCode系列的第一篇博客，也在尝试改变自己做题的方法，知道解法不等于理解。特别是没做出来的题目，看了解法之后感叹“好神奇啊”，这种时候得静下心来细细分析了，并且尝试正推，想一想正着是如何推导出来的。  题目 31.Next PermutationImplement next permutation, which rearranges numbers into the lexicogra">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/19/LeetCode/LeetCode-31-Next-Permutation/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>LeetCode 31. Next Permutation | Rex's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rex's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/19/LeetCode/LeetCode-31-Next-Permutation/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Xingyu Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/pig.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LeetCode 31. Next Permutation
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-19 00:32:52" itemprop="dateCreated datePublished" datetime="2018-12-19T00:32:52-08:00">2018-12-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-01-15 19:38:26" itemprop="dateModified" datetime="2019-01-15T19:38:26-08:00">2019-01-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这是LeetCode系列的第一篇博客，也在尝试改变自己做题的方法，知道解法不等于理解。特别是没做出来的题目，看了解法之后感叹“好神奇啊”，这种时候得静下心来细细分析了，并且尝试正推，想一想正着是如何推导出来的。 </p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><blockquote>
+<p><a href="https://leetcode.com/problems/next-permutation/" target="_blank" rel="noopener">31.Next Permutation</a><br>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</p>
+<p>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).</p>
+<p>The replacement must be in-place and use only constant extra memory.</p>
+<p>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.</p>
+<p>1,2,3 → 1,3,2<br>3,2,1 → 1,2,3<br>1,1,5 → 1,5,1</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>什么是lexicographically: 字典顺序<br>开始：从左到右递增<br>结束：从左到右递减<br>个人的Notation： <code>()</code>表示集合， <code>[]</code>表示一种带顺序的排列</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>先找一下字典顺序的规律，比如说数组: <code>[1, 2, 3, 4, 5]</code>，开始值是从左到右递增，最大是从左到右递减。 方便分析，直接用十进制的值来表达，还有一点就是，为了让值一点点递增，我们是要尽量先修改右边权值比较小的位数。我用变动的位数来分组，在相同变动的位数中，不同的排序会产生不同的值，可以暂时忽略前面共同的部分，尝试寻找规律：</p>
+<h4 id="变动1位"><a href="#变动1位" class="headerlink" title="变动1位"></a>变动1位</h4><p>12345， 因为每次变动是数字位置调换，只变动一位是不可能的</p>
+<h4 id="变动2位-4-5"><a href="#变动2位-4-5" class="headerlink" title="变动2位 (4, 5)"></a>变动2位 (4, 5)</h4><p>45<br>54<br>把大一点的数字换到值高一点的位置上，暂时还看不出规律。 两位不够用了，需要借<code>3</code>的位置</p>
+<h4 id="变动3位-3-4-5"><a href="#变动3位-3-4-5" class="headerlink" title="变动3位 (3, 4, 5)"></a>变动3位 (3, 4, 5)</h4><p>354<br>这里可以进入一个子问题: 集合(3, 4, 5)从[3, 5, 4]开始的字典顺序<br>    因为已知[5, 4] 已经是只变动两位的最大值了,需要挑选一个值放在<code>3</code>的位置上。为了避免向前跨的步数过大，需要挑选<strong>最小的比3大的值</strong>。所以把4放在最前面，然后要<strong>确保后两位是从最小值开始，如前面所说，最小值就是递增</strong>,可以得到:[4, 3, 5]<br>    因为后两位[3, 5]也是有上升的空间，然后我们又可以进入到一个子问题：集合(3, 5)从[3, 5]开始的字典顺序<br>    我们知道[3, 5]这两位下一个值是[5,3]， 然后就达到了这两位的最大值, 我们返回到三位也就是：[4, 5, 3]。 <strong>后面位数值达到最大的时候，我们尝试动最前面一位</strong>，这样不断重复下去，直到3位不够用了.<br>全部列出来就是：<br>354<br>435<br>453<br>534<br>543<br>到这里，(3, 4, 5) 这个集合达到了<strong>最大值</strong>，也就是[5, 4, 3], 从左到右递减，接着尝试借用<code>2</code>的位置.</p>
+<h4 id="变动4位-2-3-4-5"><a href="#变动4位-2-3-4-5" class="headerlink" title="变动4位 (2, 3, 4, 5)"></a>变动4位 (2, 3, 4, 5)</h4><p>开始：2543 （除了2， 其余部分递减）<br>2534<br>2543<br>….<br>5432 (递减)</p>
+<h4 id="变动5位-1-2-3-4-5"><a href="#变动5位-1-2-3-4-5" class="headerlink" title="变动5位 (1, 2, 3, 4, 5)"></a>变动5位 (1, 2, 3, 4, 5)</h4><p>15432 （除了1， 其余部分递减）<br>….<br>到最后为达到全部从左到右递减：[5, 4, 3, 2, 1]</p>
+<h3 id="归纳"><a href="#归纳" class="headerlink" title="归纳"></a>归纳</h3><p>其实这样分析是在尝试理解什么是字典顺序，到这里其实对本题的解法还没有太大帮助，但是可以理解其中的原理，又是分组又是子问题的，搞得很复杂, 尝试归纳一下上面过程中重要的逻辑点（粗体部分）: </p>
+<ol>
+<li>当最右边k位数是递减时，最右边k位数的排列已经达到最大值了，需要向左边借位，可以写成: 当[i, end] 是递减时，需要用i-1的位置</li>
+<li>选择放在i-1位置上值的规律：选择[i, end] 当中，比nums[i-1]大的最小数字</li>
+<li>最高位i-1上已经换上一个稍大一点的值了，然后把[i, end]的排列最小化，也就是从左到右递增<br>最重要的理解来了，也是困扰我很久的部分，之前不知道这段分析有什么用，不知道如何运用这个规律，其实当我们把[i, end]从左到右递增排序后（上面第三步），<strong>整个问题就变成了最右一位数是递减(只有一位，可以理解成递减), 最右一位达到最大值</strong>，返回第一步重新套用这个寻找规则</li>
+</ol>
+<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><ol>
+<li>从右到左迭代，直到nums[i] &gt; nums[i-1]。可以知道[i, end] 是递减</li>
+<li>从[i, end]中找到比nums[i-1]大的最小值nums[j], 对调nums[i]和nums[j]</li>
+<li>翻转[i, end]， 让它升序</li>
+</ol>
+<h1 id="第一次Submission"><a href="#第一次Submission" class="headerlink" title="第一次Submission"></a>第一次Submission</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> n = nums.length;</span><br><span class="line">     <span class="keyword">if</span> (n == <span class="number">0</span> || n == <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">int</span> i = n - <span class="number">1</span>;</span><br><span class="line">     <span class="keyword">while</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="keyword">if</span> (nums[i] &gt; nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">         &#125;</span><br><span class="line">         i--;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">         reverse(nums, <span class="number">0</span>, n-<span class="number">1</span>);</span><br><span class="line">         <span class="keyword">return</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     i--;</span><br><span class="line">     <span class="keyword">int</span> j = n - <span class="number">1</span>;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">while</span> (j &gt; i) &#123;</span><br><span class="line">         <span class="keyword">if</span> (nums[j] &gt; nums[i]) &#123;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             j--;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">     nums[i] = nums[j];</span><br><span class="line">     nums[j] = temp; </span><br><span class="line">     reverse(nums, i+<span class="number">1</span>, n-<span class="number">1</span>);</span><br><span class="line">     </span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">         <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">         nums[i] = nums[j];</span><br><span class="line">         nums[j] = temp;</span><br><span class="line">         i++;</span><br><span class="line">         j--;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="改进后"><a href="#改进后" class="headerlink" title="改进后"></a>改进后</h1><p>稍微精简了一下while loop， 用binary search加速查找<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> i = n;</span><br><span class="line">    <span class="keyword">while</span>(--i &gt; <span class="number">0</span> &amp;&amp; nums[i] &lt;= nums[i-<span class="number">1</span>]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">        reverse(nums, <span class="number">0</span>, n-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> j = binarySearch(i, n-<span class="number">1</span>, nums, nums[i-<span class="number">1</span>]); </span><br><span class="line">    swap(nums, i-<span class="number">1</span>, j);</span><br><span class="line">    reverse(nums, i, n-<span class="number">1</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        swap(nums, i, j);</span><br><span class="line">        i++;</span><br><span class="line">        j--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">    nums[i] = nums[j];</span><br><span class="line">    nums[j] = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意： 降序，least greater than target</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span> e, <span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> successor = s;</span><br><span class="line">    <span class="keyword">while</span> (s &lt;= e) &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = ( s + e) / <span class="number">2</span> ;</span><br><span class="line">        <span class="keyword">if</span> (nums[mid] == target) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target) &#123;</span><br><span class="line">            successor = mid;</span><br><span class="line">            s = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</span><br><span class="line">            e = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> successor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h1><p>这是第一次这么认真地分析一个算法，也是花了不少时间，但对思维的训练确实有用，起码不会糊里糊涂的。</p>
+<ol>
+<li>正推算法，归纳出核心逻辑，找出不同情况下的连接点</li>
+<li>Binary Search的变换形态，准备开一个新的博客总结一下</li>
+<li>这篇也可以算是对字典序的分析了</li>
+</ol>
+<p>继续加油!</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+          
+            <a href="/tags/Binary-Search/" rel="tag"># Binary Search</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/17/LeetCode/LeetCode-重新启航/" rel="next" title="LeetCode-重新启航">
+                <i class="fa fa-chevron-left"></i> LeetCode-重新启航
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/31/Diary/2018回顾总结/" rel="prev" title="2018 回顾总结">
+                2018 回顾总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/pig.jpg" alt="Xingyu Liu">
+            
+              <p class="site-author-name" itemprop="name">Xingyu Liu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">2.0.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.0.2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变动1位"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">变动1位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变动2位-4-5"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">变动2位 (4, 5)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变动3位-3-4-5"><span class="nav-number">2.0.2.3.</span> <span class="nav-text">变动3位 (3, 4, 5)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变动4位-2-3-4-5"><span class="nav-number">2.0.2.4.</span> <span class="nav-text">变动4位 (2, 3, 4, 5)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变动5位-1-2-3-4-5"><span class="nav-number">2.0.2.5.</span> <span class="nav-text">变动5位 (1, 2, 3, 4, 5)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归纳"><span class="nav-number">2.0.3.</span> <span class="nav-text">归纳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题"><span class="nav-number">2.0.4.</span> <span class="nav-text">解题</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#第一次Submission"><span class="nav-number">3.</span> <span class="nav-text">第一次Submission</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#改进后"><span class="nav-number">4.</span> <span class="nav-text">改进后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#收获"><span class="nav-number">5.</span> <span class="nav-text">收获</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xingyu Liu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="之前工作的项目中需要做用户活动的实时推送，当某个用户做了一些操作，系统需要向相关用户进行消息的推送。IOS端有苹果自带的消息推送，WEB端我们使用了每隔5秒发送HTTP请求的方法，但这个方法对系统资源有很大的浪费，并且实时性不够强。我稍微搜索了一下，结合我们现有的Kafka，新的解决方法是把用户动态丢进Kafka里，然后前端使用WebSocket进行获取，这篇博客就是一个简短的Kafka+Spri">
-<meta name="keywords" content="Java,Kafka,Spring">
+<meta name="keywords" content="Kafka,Java,Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Kafka和Websocket实现消息实时推送">
 <meta property="og:url" content="http://yoursite.com/2019/01/18/使用Kafka和Websocket实现消息实时推送/index.html">
@@ -485,9 +485,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"># Java</a>
-          
             <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/Spring/" rel="tag"># Spring</a>
           
@@ -586,7 +586,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -648,7 +648,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

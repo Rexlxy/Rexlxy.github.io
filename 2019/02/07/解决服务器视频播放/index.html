@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Rex&#39;s Blog">
 <meta property="og:description" content="最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。 过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-08T07:21:38.185Z">
+<meta property="og:updated_time" content="2019-02-08T07:30:12.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务器视频在线播放">
 <meta name="twitter:description" content="最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。 过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。">
@@ -383,7 +383,7 @@
                 
               
 
-              <time title="Created: 2019-02-07 19:19:32 / Modified: 23:21:38" itemprop="dateCreated datePublished" datetime="2019-02-07T19:19:32-08:00">2019-02-07</time>
+              <time title="Created: 2019-02-07 19:19:32 / Modified: 23:30:12" itemprop="dateCreated datePublished" datetime="2019-02-07T19:19:32-08:00">2019-02-07</time>
             
 
             
@@ -430,10 +430,10 @@
 <p><code>Content-Disposition: inline</code>: 代表的是可以使用网页展现（用浏览器打开），在这次任务中我就选用的<code>inline</code>，因为想让浏览器在线播放。</p>
 <p><code>Content-Disposition: attachment</code>： 浏览器会直接下载文件</p>
 <p><code>Content-Disposition: attachment; filename=&quot;filename.jpg&quot;</code>:指定文件名，这次项目也用到了，因为可能存文件的时候确保唯一性，文件名是唯一的ID，原文件名存在了数据库。下载文件的时候，可以服务器从数据库把名字找回来，带着文件后缀很方便，直接交给浏览器就行了。</p>
-<h1 id="内存问题"><a href="#内存问题" class="headerlink" title="内存问题"></a>内存问题</h1><p>第一次尝试的时候我直接复制的下载图片文件的代码，是别的同事写的，直接就用了。后来发现，服务器处理多个请求的时候内存爆增，读大的视频文件后来直接内存满了，速度非常慢。后来回头看读文件的代码，发现是把整个文件一下子读到一个<code>byte[]</code>的方法，这种方法对小的图片可能无所谓，但大的文件会一下子把内存占满。后来我就改成了经典的分次读取，顺便用了Java7的try语言特性，不需要像以前一样用finally和try-catch额外处理InputStream和OutputStream的关闭。</p>
+<h1 id="内存问题"><a href="#内存问题" class="headerlink" title="内存问题"></a>内存问题</h1><p>第一次做这个部分的时候，我直接从下载图片功能复制了代码，是以前别的同事写的。跑是可以跑得起来，但是服务器处理多个请求的时候内存爆增，读大的视频文件后来直接内存满了，速度非常慢。我回头读代码，发现是把整个文件一下子读到一个<code>byte[]</code>的方法，这种方法对小的图片可能无所谓，但大的文件会一下子把内存占满。后来我就改成了经典的分次读取，顺便用了Java7的try语言特性，不需要像以前一样用finally和try-catch额外处理InputStream和OutputStream的关闭。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IO</span></span><br><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">this</span>.s3Service.getObjectInputStream(S3Service.ATTACHMENT_BUCKET, filename, requestStart, length); <span class="comment">// 从 Minio 文件服务器获取的InputStream</span></span><br><span class="line">     OutputStream os = response.getOutputStream()) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">    <span class="keyword">int</span> byteRead;</span><br><span class="line">    <span class="keyword">while</span>((byteRead = is.read(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">        os.write(buffer, <span class="number">0</span>, byteRead);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException | StorageException e) &#123;</span><br><span class="line">    LOG.catching(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Safari-和-IOS-播放不了-gt-使用Range头"><a href="#Safari-和-IOS-播放不了-gt-使用Range头" class="headerlink" title="Safari 和 IOS 播放不了 -&gt; 使用Range头"></a>Safari 和 IOS 播放不了 -&gt; 使用Range头</h1><p>为了方便测试，把后端filter规则改了一下，然后所有视频请求都可以通过，可以直接在浏览器打开。成功在Chrome上播放起来后，心里也产生了一个疑问，请求的视频文件都是一整个传给客户端的。按道理应该是会分段的呀，想着想着用我们开发的App端测试了一下，问题来了，都是没法播放，IOS的浏览器也无法打开，电脑端的Safar浏览器也无法播放。查看了一下发送的请求，发现苹果端都会先发一个请求包含Range头，并且第一个Range头永远是<code>Range: bytes=0-1</code></p>
-<p>后来经过研究，苹果设备的视频播放默认需要服务器支持Range头，第一次会发送一个0-1 byte的请求，服务器需要表明支持分段传输，并且Response的status code是206，所以我要改进代码，让他支持标准的Range头和分段传输。</p>
+<h1 id="Safari-和-IOS-播放不了-gt-使用Range头"><a href="#Safari-和-IOS-播放不了-gt-使用Range头" class="headerlink" title="Safari 和 IOS 播放不了 -&gt; 使用Range头"></a>Safari 和 IOS 播放不了 -&gt; 使用Range头</h1><p>为了方便测试，我把后端filter规则改了一下，然后所有视频请求都可以通过，可以直接在浏览器打开。成功在Chrome上播放起来后，心里也产生了一个疑问，请求的视频文件都是一整个传给客户端的。按道理应该是会分段的呀，想着想着用我们的App端测试了一下，问题来了，都是没法播放，IOS的浏览器也无法打开，电脑端的Safari浏览器也无法播放。查看了一下发送的请求，发现苹果端都会先发一个请求包含Range头，并且第一个Range头永远是<code>Range: bytes=0-1</code></p>
+<p>后来经过研究，苹果设备的视频播放默认需要服务器支持Range头，第一次会发送一个0-1 byte的请求，服务器需要表明支持分段传输，并且Response的status code是206，所以我需要改进代码，让他支持标准的Range头和分段传输。</p>
 <h2 id="分段传输"><a href="#分段传输" class="headerlink" title="分段传输"></a>分段传输</h2><h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h4 id="Range-Header"><a href="#Range-Header" class="headerlink" title="Range Header"></a><code>Range</code> Header</h4><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range" target="_blank" rel="noopener">详细解释</a></p>
 <p>说明请求的数据单位和范围</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;</span><br></pre></td></tr></table></figure>

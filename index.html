@@ -697,12 +697,24 @@
                 
               
 
-              <time title="Created: 2019-01-30 22:34:18 / Modified: 22:49:50" itemprop="dateCreated datePublished" datetime="2019-01-30T22:34:18-08:00">2019-01-30</time>
+              <time title="Created: 2019-01-30 22:34:18" itemprop="dateCreated datePublished" datetime="2019-01-30T22:34:18-08:00">2019-01-30</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-16 22:27:02" itemprop="dateModified" datetime="2019-02-16T22:27:02-08:00">2019-02-16</time>
               
             
           </span>
@@ -974,7 +986,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/17/使用Kafka/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/17/Kafka-usage-note/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Rex Liu">
@@ -994,7 +1006,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/17/使用Kafka/" class="post-title-link" itemprop="url">Kafka使用笔记</a>
+                <a href="/2019/01/17/Kafka-usage-note/" class="post-title-link" itemprop="url">Kafka Note</a>
               
             
           </h1>
@@ -1036,7 +1048,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-19 11:58:13" itemprop="dateModified" datetime="2019-01-19T11:58:13-08:00">2019-01-19</time>
+                <time title="Modified: 2019-02-16 22:26:41" itemprop="dateModified" datetime="2019-02-16T22:26:41-08:00">2019-02-16</time>
               
             
           </span>
@@ -1072,19 +1084,20 @@
       
         
           
-            <h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>使用HomeBrew安装, Kafka使用了ZooKeeper，两个都要安装</p>
+            <h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>Install with. <code>homebrew</code>. Since Kafka uses ZooKeeper, we need to install both.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install kafka</span><br><span class="line">$ brew intall zookeeper</span><br></pre></td></tr></table></figure>
-<h2 id="开启服务器"><a href="#开启服务器" class="headerlink" title="开启服务器"></a>开启服务器</h2><p>ZooKeeper服务器</p>
+<h2 id="Start-Servers"><a href="#Start-Servers" class="headerlink" title="Start Servers"></a>Start Servers</h2><p>ZooKeeper server</p>
 <p><code>$ zkServer start</code></p>
-<p>Kafka服务器</p>
+<p>Kafka server</p>
 <p><code>$ kafka-server-start /usr/local/etc/kafka/server.properties</code></p>
-<h2 id="创建Topic"><a href="#创建Topic" class="headerlink" title="创建Topic"></a>创建Topic</h2><p><code>$ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test</code></p>
-<p>注意接口使用的是 <code>2181</code></p>
-<h2 id="创建一个生产者端"><a href="#创建一个生产者端" class="headerlink" title="创建一个生产者端"></a>创建一个生产者端</h2><p><code>$ kafka-console-producer --broker-list localhost:9092 --topic test</code></p>
-<p>发布消息到test类别</p>
-<p>测试: <code>&gt; Hello World</code></p>
-<h2 id="创建一个消费者端"><a href="#创建一个消费者端" class="headerlink" title="创建一个消费者端"></a>创建一个消费者端</h2><p><code>$ kafka-console-consumer --zookeeper localhost:2181 --topic test --from-beginning</code></p>
-<p>会接收到消息 <code>&gt; Hello World</code></p>
+<h2 id="Create-Topic"><a href="#Create-Topic" class="headerlink" title="Create Topic"></a>Create Topic</h2><p><code>$ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test</code></p>
+<p>note: the port used is <code>2181</code></p>
+<h2 id="Create-a-producer"><a href="#Create-a-producer" class="headerlink" title="Create a producer"></a>Create a producer</h2><p><code>$ kafka-console-producer --broker-list localhost:9092 --topic test</code></p>
+<p>send message to topic ‘test’</p>
+<p> <code>&gt; Hello World</code></p>
+<h2 id="Create-a-consumer"><a href="#Create-a-consumer" class="headerlink" title="Create a consumer"></a>Create a consumer</h2><p><code>$ kafka-console-consumer --zookeeper localhost:2181 --topic test --from-beginning</code></p>
+<p>Received message</p>
+<p> <code>&gt; Hello World</code></p>
 
           
         

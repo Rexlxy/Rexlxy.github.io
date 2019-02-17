@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Rex&#39;s Blog">
 <meta property="og:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-01-31T06:49:50.579Z">
+<meta property="og:updated_time" content="2019-02-17T06:27:02.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1&#x2F;30&#x2F;2019 日常">
 <meta name="twitter:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因">
@@ -382,12 +382,24 @@
                 
               
 
-              <time title="Created: 2019-01-30 22:34:18 / Modified: 22:49:50" itemprop="dateCreated datePublished" datetime="2019-01-30T22:34:18-08:00">2019-01-30</time>
+              <time title="Created: 2019-01-30 22:34:18" itemprop="dateCreated datePublished" datetime="2019-01-30T22:34:18-08:00">2019-01-30</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-16 22:27:02" itemprop="dateModified" datetime="2019-02-16T22:27:02-08:00">2019-02-16</time>
               
             
           </span>

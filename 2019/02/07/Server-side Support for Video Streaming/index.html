@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。 过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。">
+  <meta name="description" content="In the last few days, I was busy with implementing functionalities of video uploading and online playing. The video streaming part impeded me for about 3 days. To fix it, I studied some HTTP headers w">
 <meta name="keywords" content="Java,HTTP">
-<meta property="og:type" content="website">
-<meta property="og:title" content="服务器视频在线播放">
-<meta property="og:url" content="http://yoursite.com/posts_backup/解决服务器视频播放.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Server-side Support for Video Streaming">
+<meta property="og:url" content="http://yoursite.com/2019/02/07/Server-side Support for Video Streaming/index.html">
 <meta property="og:site_name" content="Rex&#39;s Blog">
-<meta property="og:description" content="最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。 过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。">
+<meta property="og:description" content="In the last few days, I was busy with implementing functionalities of video uploading and online playing. The video streaming part impeded me for about 3 days. To fix it, I studied some HTTP headers w">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-08T07:30:12.929Z">
+<meta property="og:updated_time" content="2019-02-17T06:05:47.185Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="服务器视频在线播放">
-<meta name="twitter:description" content="最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。 过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。">
+<meta name="twitter:title" content="Server-side Support for Video Streaming">
+<meta name="twitter:description" content="In the last few days, I was busy with implementing functionalities of video uploading and online playing. The video streaming part impeded me for about 3 days. To fix it, I studied some HTTP headers w">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/posts_backup/解决服务器视频播放.html">
+  <link rel="canonical" href="http://yoursite.com/2019/02/07/Server-side Support for Video Streaming/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>服务器视频在线播放 | Rex's Blog</title>
+  <title>Server-side Support for Video Streaming | Rex's Blog</title>
   
 
 
@@ -320,102 +320,227 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Server-side Support for Video Streaming/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rex Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/pig.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rex's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">服务器视频在线播放
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>最近忙了几天一直在做服务器视频上传和在线播放视频的功能，然后一直卡在在线播放，花了不少时间学习HTTP还有基础的Java IO， 部署到服务器后，也遇到一些Nginx的问题。</p>
-<p>过程中加深了很多HTTP的知识，HTTP真的是神协议，易懂高效，也许这就是它被大家接受的原因吧。</p>
+          <h1 class="post-title" itemprop="name headline">Server-side Support for Video Streaming
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-02-07 19:19:32" itemprop="dateCreated datePublished" datetime="2019-02-07T19:19:32-08:00">2019-02-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-16 22:05:47" itemprop="dateModified" datetime="2019-02-16T22:05:47-08:00">2019-02-16</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>In the last few days, I was busy with implementing functionalities of video uploading and online playing. The video streaming part impeded me for about 3 days. To fix it, I studied some HTTP headers which I didn’t use before.  And to solve memory issue, I reviewed basic knowledges of Java IO. In general, it’s a good experience of learning and problem solving.</p>
 <a id="more"></a>
-<h1 id="下载-VS-播放"><a href="#下载-VS-播放" class="headerlink" title="下载 VS 播放"></a>下载 VS 播放</h1><p>经常我们会发现，点开一个链接可能是直接下载文件，或者是浏览器尝试打开这个文件。这个部分需要用到HTTP header：<code>Content-Disposition</code></p>
-<h2 id="Content-Disposition"><a href="#Content-Disposition" class="headerlink" title="Content-Disposition"></a>Content-Disposition</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener">详细解释</a></p>
-<p><code>Content-Disposition: inline</code>: 代表的是可以使用网页展现（用浏览器打开），在这次任务中我就选用的<code>inline</code>，因为想让浏览器在线播放。</p>
-<p><code>Content-Disposition: attachment</code>： 浏览器会直接下载文件</p>
-<p><code>Content-Disposition: attachment; filename=&quot;filename.jpg&quot;</code>:指定文件名，这次项目也用到了，因为可能存文件的时候确保唯一性，文件名是唯一的ID，原文件名存在了数据库。下载文件的时候，可以服务器从数据库把名字找回来，带着文件后缀很方便，直接交给浏览器就行了。</p>
-<h1 id="内存问题"><a href="#内存问题" class="headerlink" title="内存问题"></a>内存问题</h1><p>第一次做这个部分的时候，我直接从下载图片功能复制了代码，是以前别的同事写的。跑是可以跑得起来，但是服务器处理多个请求的时候内存爆增，读大的视频文件后来直接内存满了，速度非常慢。我回头读代码，发现是把整个文件一下子读到一个<code>byte[]</code>的方法，这种方法对小的图片可能无所谓，但大的文件会一下子把内存占满。后来我就改成了经典的分次读取，顺便用了Java7的try语言特性，不需要像以前一样用finally和try-catch额外处理InputStream和OutputStream的关闭。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IO</span></span><br><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">this</span>.s3Service.getObjectInputStream(S3Service.ATTACHMENT_BUCKET, filename, requestStart, length); <span class="comment">// 从 Minio 文件服务器获取的InputStream</span></span><br><span class="line">     OutputStream os = response.getOutputStream()) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">    <span class="keyword">int</span> byteRead;</span><br><span class="line">    <span class="keyword">while</span>((byteRead = is.read(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">        os.write(buffer, <span class="number">0</span>, byteRead);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException | StorageException e) &#123;</span><br><span class="line">    LOG.catching(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Safari-和-IOS-播放不了-gt-使用Range头"><a href="#Safari-和-IOS-播放不了-gt-使用Range头" class="headerlink" title="Safari 和 IOS 播放不了 -&gt; 使用Range头"></a>Safari 和 IOS 播放不了 -&gt; 使用Range头</h1><p>为了方便测试，我把后端filter规则改了一下，然后所有视频请求都可以通过，可以直接在浏览器打开。成功在Chrome上播放起来后，心里也产生了一个疑问，请求的视频文件都是一整个传给客户端的。按道理应该是会分段的呀，想着想着用我们的App端测试了一下，问题来了，都是没法播放，IOS的浏览器也无法打开，电脑端的Safari浏览器也无法播放。查看了一下发送的请求，发现苹果端都会先发一个请求包含Range头，并且第一个Range头永远是<code>Range: bytes=0-1</code></p>
-<p>后来经过研究，苹果设备的视频播放默认需要服务器支持Range头，第一次会发送一个0-1 byte的请求，服务器需要表明支持分段传输，并且Response的status code是206，所以我需要改进代码，让他支持标准的Range头和分段传输。</p>
-<h2 id="分段传输"><a href="#分段传输" class="headerlink" title="分段传输"></a>分段传输</h2><h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h4 id="Range-Header"><a href="#Range-Header" class="headerlink" title="Range Header"></a><code>Range</code> Header</h4><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range" target="_blank" rel="noopener">详细解释</a></p>
-<p>说明请求的数据单位和范围</p>
+<h1 id="Download-vs-Online-Play"><a href="#Download-vs-Online-Play" class="headerlink" title="Download vs. Online Play"></a>Download vs. Online Play</h1><p>In our daily use of browser, we should have noticed that when the browser opens urls of files, it’ll either download the content or try to display it. Actually, this action is controlled by the response header <code>Content-Disposition</code>. </p>
+<h3 id="Response-header-Content-Disposition"><a href="#Response-header-Content-Disposition" class="headerlink" title="Response header: Content-Disposition"></a>Response header: <code>Content-Disposition</code></h3><ul>
+<li><p><code>Content-Disposition: inline</code>: <code>inline</code> tells the client side to display/open the file. And that’s what I should use for this online playing task.</p>
+</li>
+<li><p><code>Content-Disposition: attachment</code>： This will trigger file downloading</p>
+</li>
+<li><p><code>Content-Disposition: attachment; filename=&quot;filename.jpg&quot;</code>:  We can set the name of the file. It’s also used in our project. When we upload the file, the file is saved with unique UUID as filename to avoid name conflicts, and at the same time, we persist original filename to database. As we retrieve the file, we use this header to set the filename that comes from database.  In this process, we don’t lose the file’s extension.</p>
+</li>
+</ul>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" target="_blank" rel="noopener">more details</a></p>
+<h1 id="Memory-Issue"><a href="#Memory-Issue" class="headerlink" title="Memory Issue"></a>Memory Issue</h1><p>In my 1st round of implementing it, I copied the code from our existing ‘getImage’ functions since they both retrieve bytes from Minio (our file server). I just wanted it to work and might refactor the code later. My laziness brought me the memory issue. </p>
+<p>When the server was handling multiple video playing requests, the system ran into the error, <code>java.lang.OutOfMemoryError: Java heap space</code>.</p>
+<p><em>tip: we can use <code>top</code> command to check memory status</em></p>
+<p>I went over the code of reading InpuStream and found that it was using <code>IOUtils.toByteArray()</code> the function that reads all bytes into an array one time.  So, whenever the client requests for a video file, it gonna be loaded into the memory.  It’s fine with small size images but costing too much memory for video files. </p>
+<p>To improve this, I swtiched it to the classic way of reading <code>InputStream</code>, which uses a while-loop to read bytes into buffer and writes bytes into the OutputStream. We can write clean code with Java 7 try-with-resources statement instead of redundant <code>finally + try-catch</code>  code block.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IO</span></span><br><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">this</span>.s3Service.getObjectInputStream(S3Service.ATTACHMENT_BUCKET, filename, requestStart, length); <span class="comment">// InputStream from our file server</span></span><br><span class="line">     OutputStream os = response.getOutputStream()) &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">    <span class="keyword">int</span> byteRead;</span><br><span class="line">    <span class="keyword">while</span>((byteRead = is.read(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">        os.write(buffer, <span class="number">0</span>, byteRead);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException | StorageException e) &#123;</span><br><span class="line">    LOG.catching(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Not-playable-on-IOS-and-Safari-gt-Add-Range-request-header"><a href="#Not-playable-on-IOS-and-Safari-gt-Add-Range-request-header" class="headerlink" title="Not playable on IOS and Safari -&gt;Add Range request header"></a>Not playable on IOS and Safari -&gt;Add <code>Range</code> request header</h1><p>For test convenience, I changed the backend filter to let video GET call pass through, then I could test in the browser from any device. The video was successfully played on Chrome. But when we tried to play videos on IOS device, it didn’t work. And I tested in Safari, it also didn’t work. Then, I was pretty sure it’s caused by some special requirement from Apple.</p>
+<p>After doing some research, I found that IOS devices need video resource to support partial response. To play a video, IOS device will send a ‘testing’ request first. That request contains a <code>Range</code> header like<code>Range: bytes=0-1</code> , to see if the server support partial content and also get length of the file to send ranged request in the following steps. </p>
+<h2 id="Partial-Content"><a href="#Partial-Content" class="headerlink" title="Partial Content"></a>Partial Content</h2><p>The following part is about partial content required request and repoonse headers.</p>
+<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h4 id="Range-Header"><a href="#Range-Header" class="headerlink" title="Range Header"></a><code>Range</code> Header</h4><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range" target="_blank" rel="noopener">more details</a></p>
+<p>Specify the byte range of the request</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;</span><br><span class="line">Range: &lt;unit&gt;=&lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;, &lt;range-start&gt;-&lt;range-end&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><h3 id="Accept-Ranges-Header"><a href="#Accept-Ranges-Header" class="headerlink" title="Accept-Ranges Header"></a><code>Accept-Ranges</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Ranges" target="_blank" rel="noopener">详细解释</a></p>
-<p>表明服务器是否支持分段</p>
-<p>支持的话：<code>Accept-Ranges: bytes</code></p>
-<p>不支持：<code>Accept-Ranges: none</code></p>
-<h3 id="Content-length-Header"><a href="#Content-length-Header" class="headerlink" title="Content-length Header"></a><code>Content-length</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Length" target="_blank" rel="noopener">详细解释</a></p>
-<p>要传输文件的<strong>总长度</strong></p>
-<h3 id="Content-Range-Header"><a href="#Content-Range-Header" class="headerlink" title="Content-Range Header"></a><code>Content-Range</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range" target="_blank" rel="noopener">详细解释</a></p>
-<p>返回部分在目标文件中的范围</p>
-<h3 id="Status-code-206-Partial-Content"><a href="#Status-code-206-Partial-Content" class="headerlink" title="Status code 206: Partial Content"></a>Status code 206: Partial Content</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/206" target="_blank" rel="noopener">详细解释</a></p>
-<p>表明返回数据是分段数据，client端需要通过<code>Content-length</code>和当前的<code>Content-Range</code>判断是否需要继续请求。</p>
-<h1 id="坑：部署后丢失Range头"><a href="#坑：部署后丢失Range头" class="headerlink" title="坑：部署后丢失Range头"></a>坑：部署后丢失Range头</h1><p>在本地测试后一切OK，部署到Amazon后，发现IOS视频又播放不了了，同样的链接可以在Chrome打开。初步判断是Range头出问题了，从服务器的LOG看到，Range头全部都是<code>null</code>, 因为本地从来没有出现过这种情况，所以猜测是Nginx没有转发Range头。</p>
-<p>参考<a href="https://blog.csdn.net/orangleliu/article/details/79970131" target="_blank" rel="noopener">这篇博客</a>后，在Nginx的配置文件对应的location里面添加:</p>
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><h3 id="Accept-Ranges-Header"><a href="#Accept-Ranges-Header" class="headerlink" title="Accept-Ranges Header"></a><code>Accept-Ranges</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Ranges" target="_blank" rel="noopener">more details</a></p>
+<p>Tell the client if the server support partial content</p>
+<p>Support：<code>Accept-Ranges: bytes</code></p>
+<p>No Support：<code>Accept-Ranges: none</code></p>
+<h3 id="Content-length-Header"><a href="#Content-length-Header" class="headerlink" title="Content-length Header"></a><code>Content-length</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Length" target="_blank" rel="noopener">more details</a></p>
+<p><strong>total length</strong> of the file</p>
+<h3 id="Content-Range-Header"><a href="#Content-Range-Header" class="headerlink" title="Content-Range Header"></a><code>Content-Range</code> Header</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range" target="_blank" rel="noopener">more details</a></p>
+<p>the range of returned data in the response</p>
+<h3 id="Status-code-206-Partial-Content"><a href="#Status-code-206-Partial-Content" class="headerlink" title="Status code 206: Partial Content"></a>Status code 206: Partial Content</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/206" target="_blank" rel="noopener">more details</a></p>
+<p>Tell the client side the response contains partial content and the client side need to use <code>Content-length</code> and <code>Content-Range</code> to check if the whole file is received.</p>
+<h1 id="Range-header-lost-after-deployed"><a href="#Range-header-lost-after-deployed" class="headerlink" title="Range header lost after deployed"></a><code>Range</code> header lost after deployed</h1><p>I was thinking that’s the end of this task. However, when the backend was deployed on Amazon server, the video playing stopped working again on IOS device. </p>
+<p>Since the same video could be played on Chrome, I speculated that the <code>Range</code> header was not working. After checking the log files, I found that all <code>Range</code> headers are null after going through Nginx. Our Nignx gateway was not redirecting the <code>Range</code> header.</p>
+<p>To fix it, I added this line to Nginx configuration:</p>
 <p><code>proxy_set_header Range $http_range;</code></p>
+<h1 id="Learnt-from-it"><a href="#Learnt-from-it" class="headerlink" title="Learnt from it"></a>Learnt from it</h1><ul>
+<li>Don’t directly reuse others’ functions without understanding what it is doing.</li>
+<li>Create a convenient testing environment when tackling an issue. (Like changing filter rule to test on different platform easily)</li>
+<li>Learn to use tools. (like using JProfiler to monit memory issue)</li>
+<li>There’s still a lot I can learn from <strong>HTTP</strong></li>
+</ul>
 <h1 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * GET - Get an video attachment, Supporting Range header</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 200 OK, return the whole fiel; 206 Partial Content</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> EntityNotFoundException exception thrown if attachment not found</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"/video/&#123;attachmentId&#125;"</span>, produces = &#123;MediaType.APPLICATION_OCTET_STREAM_VALUE&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getVideoAttachment</span><span class="params">(HttpServletRequest request, HttpServletResponse response, @PathVariable UUID attachmentId)</span> <span class="keyword">throws</span> EntityNotFoundException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.attachmentService.findAttachment(attachmentId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">    String filename = attachmentId.toString();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get file statistics info (file size)</span></span><br><span class="line">    ObjectStat stat;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        stat = <span class="keyword">this</span>.s3Service.getStatObject(S3Service.ATTACHMENT_BUCKET, filename);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (StorageException e) &#123;</span><br><span class="line">        LOG.info(<span class="string">"the video &#123;&#125; doesn't exist"</span>, attachmentId);</span><br><span class="line">        response.setStatus(HttpServletResponse.SC_NO_CONTENT);</span><br><span class="line">        response.setContentType(<span class="string">"application/json"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> contentLength    = stat.length();</span><br><span class="line">    String range          = request.getHeader(<span class="string">"Range"</span>);</span><br><span class="line">    <span class="keyword">long</span> requestStart           = <span class="number">0</span>;</span><br><span class="line">    Long length;</span><br><span class="line"></span><br><span class="line">    response.setContentType(<span class="string">"video/mp4"</span>);</span><br><span class="line">    response.setHeader(<span class="string">"Accept-Ranges"</span>, <span class="string">"bytes"</span>);</span><br><span class="line">    response.setHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"inline"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If there's no 'Range' header, send back the whole file</span></span><br><span class="line">    <span class="keyword">if</span>(range == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="comment">// 200</span></span><br><span class="line">        response.setStatus(HttpServletResponse.SC_OK);</span><br><span class="line">        requestStart = <span class="number">0</span>;</span><br><span class="line">        length = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Header containing 'Range'</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">// 206 Partial Content</span></span><br><span class="line">        response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);</span><br><span class="line">        <span class="keyword">long</span> requestEnd = <span class="number">0</span>;</span><br><span class="line">        String[] ranges = range.split(<span class="string">"="</span>);</span><br><span class="line">        <span class="keyword">if</span>(ranges.length &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            String[] rangeDatas = ranges[<span class="number">1</span>].split(<span class="string">"-"</span>);</span><br><span class="line">            requestStart = Integer.parseInt(rangeDatas[<span class="number">0</span>]);</span><br><span class="line">            <span class="keyword">if</span>(rangeDatas.length &gt; <span class="number">1</span>)&#123;</span><br><span class="line">                requestEnd = Integer.parseInt(rangeDatas[<span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Range contains a upper limit</span></span><br><span class="line">        <span class="keyword">if</span>(requestEnd &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            length = requestEnd - requestStart + <span class="number">1</span>;</span><br><span class="line">            response.setHeader(<span class="string">"Content-length"</span>, <span class="string">""</span> + length);</span><br><span class="line">            response.setHeader(<span class="string">"Content-Range"</span>, <span class="string">"bytes "</span> + requestStart + <span class="string">"-"</span> + requestEnd + <span class="string">"/"</span> + contentLength);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Range has no upper limit</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            length = contentLength - requestStart;</span><br><span class="line">            response.setHeader(<span class="string">"Content-length"</span>, <span class="string">""</span> + length);</span><br><span class="line">            response.setHeader(<span class="string">"Content-Range"</span>, <span class="string">"bytes "</span>+ requestStart + <span class="string">"-"</span> + (contentLength - <span class="number">1</span>) + <span class="string">"/"</span> + contentLength);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> byteCount = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// IO</span></span><br><span class="line">    <span class="keyword">try</span> (InputStream  is    = <span class="keyword">this</span>.s3Service.getObjectInputStream(S3Service.ATTACHMENT_BUCKET, filename, requestStart, length);</span><br><span class="line">         OutputStream os    = response.getOutputStream()) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4096</span>];</span><br><span class="line">        <span class="keyword">int</span> byteRead;</span><br><span class="line">        <span class="keyword">while</span>((byteRead = is.read(buffer)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            os.write(buffer, <span class="number">0</span>, byteRead);</span><br><span class="line">            byteCount += byteRead;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException | StorageException e) &#123;</span><br><span class="line">        LOG.catching(e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    LOG.info(<span class="string">"attachment request for : &#123;&#125;"</span>, attachmentId);</span><br><span class="line">    LOG.info(<span class="string">"request header, Range: &#123;&#125;"</span>, range );</span><br><span class="line">    LOG.info(<span class="string">"bytes written into response: &#123;&#125;"</span>, byteCount);</span><br><span class="line">    LOG.info(<span class="string">"response header, Content-length &#123;&#125;"</span>, response.getHeader(<span class="string">"Content-length"</span>));</span><br><span class="line">    LOG.info(<span class="string">"response header, Content-Range &#123;&#125;"</span>, response.getHeader(<span class="string">"Content-Range"</span>));</span><br><span class="line">    LOG.info(<span class="string">"time takes: &#123;&#125; ms"</span> , (System.currentTimeMillis() - startTime));</span><br><span class="line">    LOG.info(<span class="string">"-----------------------------------------------------"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        
-      </div>
-      
-      
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/02/伪文艺青年/" rel="next" title="伪文艺青年">
+                <i class="fa fa-chevron-left"></i> 伪文艺青年
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -572,7 +697,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载-VS-播放"><span class="nav-number">1.</span> <span class="nav-text">下载 VS 播放</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Content-Disposition"><span class="nav-number">1.1.</span> <span class="nav-text">Content-Disposition</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存问题"><span class="nav-number">2.</span> <span class="nav-text">内存问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Safari-和-IOS-播放不了-gt-使用Range头"><span class="nav-number">3.</span> <span class="nav-text">Safari 和 IOS 播放不了 -&gt; 使用Range头</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分段传输"><span class="nav-number">3.1.</span> <span class="nav-text">分段传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-number">3.2.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Range-Header"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">Range Header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response"><span class="nav-number">3.2.1.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept-Ranges-Header"><span class="nav-number">3.2.2.</span> <span class="nav-text">Accept-Ranges Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-length-Header"><span class="nav-number">3.2.3.</span> <span class="nav-text">Content-length Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Range-Header"><span class="nav-number">3.2.4.</span> <span class="nav-text">Content-Range Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-code-206-Partial-Content"><span class="nav-number">3.2.5.</span> <span class="nav-text">Status code 206: Partial Content</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#坑：部署后丢失Range头"><span class="nav-number">4.</span> <span class="nav-text">坑：部署后丢失Range头</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">5.</span> <span class="nav-text">Code</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Download-vs-Online-Play"><span class="nav-number">1.</span> <span class="nav-text">Download vs. Online Play</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Response-header-Content-Disposition"><span class="nav-number">1.0.1.</span> <span class="nav-text">Response header: Content-Disposition</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Issue"><span class="nav-number">2.</span> <span class="nav-text">Memory Issue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Not-playable-on-IOS-and-Safari-gt-Add-Range-request-header"><span class="nav-number">3.</span> <span class="nav-text">Not playable on IOS and Safari -&gt;Add Range request header</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Partial-Content"><span class="nav-number">3.1.</span> <span class="nav-text">Partial Content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-number">3.2.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Range-Header"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">Range Header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response"><span class="nav-number">3.2.1.</span> <span class="nav-text">Response</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept-Ranges-Header"><span class="nav-number">3.2.2.</span> <span class="nav-text">Accept-Ranges Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-length-Header"><span class="nav-number">3.2.3.</span> <span class="nav-text">Content-length Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Range-Header"><span class="nav-number">3.2.4.</span> <span class="nav-text">Content-Range Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Status-code-206-Partial-Content"><span class="nav-number">3.2.5.</span> <span class="nav-text">Status code 206: Partial Content</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Range-header-lost-after-deployed"><span class="nav-number">4.</span> <span class="nav-text">Range header lost after deployed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Learnt-from-it"><span class="nav-number">5.</span> <span class="nav-text">Learnt from it</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code"><span class="nav-number">6.</span> <span class="nav-text">Code</span></a></li></div>
             
 
           </div>

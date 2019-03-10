@@ -336,6 +336,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/09/note-map-reduce/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rex Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/pig.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/09/note-map-reduce/" class="post-title-link" itemprop="url">MapReduce Note</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-09 20:34:47 / Modified: 21:19:51" itemprop="dateCreated datePublished" datetime="2019-03-09T20:34:47-08:00">2019-03-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Note/" itemprop="url" rel="index"><span itemprop="name">Note</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Notes for the <a href="http://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf" target="_blank" rel="noopener">MapReduce Paper</a></p>
+<p>List bullet points  for quick reviews in future. </p>
+<h1 id="Prgoramming-Model"><a href="#Prgoramming-Model" class="headerlink" title="Prgoramming Model"></a>Prgoramming Model</h1><ul>
+<li><p><strong>Map</strong> takes an input pair  and produces a set of intermediate key/value pairs.</p>
+<p><code>map  (k1, v1)    -&gt;  list (k2, v2)</code></p>
+</li>
+<li><p>The <strong>Reduce</strong> function accepts an intermediate key <em>I</em> and a set of values for that key. Typically zero or one output value.</p>
+<p><code>reduce (k2, list(v2))  -&gt;  list (v2)</code></p>
+</li>
+</ul>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><h2 id="Execution-Overview"><a href="#Execution-Overview" class="headerlink" title="Execution Overview"></a>Execution Overview</h2><ul>
+<li>automatically partition the input data into a set of  M splits.</li>
+<li><em>Reduce</em> invocations are distributed by partitioning the intermediate key space into R pieces using a partitioning function (e.g., hash(key) mod R)</li>
+</ul>
+<p><img src="/images/MapReduce-Figure-1-Execution-Overview.png" alt="image-20190309205203708"></p>
+<p>Overall flow of a MapReduce opeartion:</p>
+<ol>
+<li><strong>User MapReduce program:</strong> Splits the input files into M pieces of typically 16 megabytes to 64 megabytes per piece.</li>
+<li>One of the copies of the program is special - <strong>the maser</strong>. There are <strong>M</strong> map tasks and <strong>R</strong> reduce tasks to assign.</li>
+<li><strong>Map worker</strong> parses key/value pairs out of the input data and passes each pair to the user-defined Map function. The intermediate key/value pairs produced by the  Map function are buffered in memory.</li>
+<li><strong>Map worker:</strong> Buffered pairs are written to local disk, partitioned into R regions by the  partitioning function. The locations of these buffered pairs are passed back to the master. </li>
+<li><strong>Reduce worker:</strong> When a reduce woker is notified by the master about these  locations:<ol>
+<li>Uses  <strong>RPC to read the buffered data</strong> from the  local disks of the map workers.</li>
+<li>Sorts all intermediate data by keys to group all occurrences of the same key together.</li>
+</ol>
+</li>
+<li>The Reduce worker iterates over the sorted intermediate data and for each key, it passes the key and corresponding set of intermediate values to <strong>the user’s Reduce function</strong>.</li>
+<li>When all map tasks and reduce tasks have been completed,  the master wakes up the user program.</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/07/Java/Server-side Support for Video Streaming/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -887,7 +1076,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-17 11:36:47" itemprop="dateModified" datetime="2019-02-17T11:36:47-08:00">2019-02-17</time>
+                <time title="Modified: 2019-02-17 11:38:18" itemprop="dateModified" datetime="2019-02-17T11:38:18-08:00">2019-02-17</time>
               
             
           </span>
@@ -965,7 +1154,7 @@
 <p>If we inject <code>KafakTemplate</code> directly, it will use the default configurations. Or we can use factory methods to customize properties in Java code: </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProducerConfig</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ProducerFactory&lt;String, String&gt; <span class="title">producerFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; configProps = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, </span><br><span class="line">          bootstrapAddress);</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, </span><br><span class="line">          StringSerializer.class);</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, </span><br><span class="line">          StringSerializer.class);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultKafkaProducerFactory&lt;&gt;(configProps);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> KafkaTemplate&lt;String, String&gt; <span class="title">kafkaTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> KafkaTemplate&lt;&gt;(producerFactory());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaListenerService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@KafkaListener</span>(topics = &#123;<span class="string">"message"</span>&#125;)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consume</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Received message: "</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>It’s straightfoward. <code>@KafkaListener</code> specifies which topics to listen to. </p>
+<p>It’s straightfoward. <code>@KafkaListener</code> specifies which topics it’s listening to. </p>
 
           
         
@@ -1885,179 +2074,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/日记/Irvine求职+近况/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Rex Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/pig.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rex's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/03/21/日记/Irvine求职+近况/" class="post-title-link" itemprop="url">Irvine求职+近况</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-03-21 18:05:05" itemprop="dateCreated datePublished" datetime="2018-03-21T18:05:05-07:00">2018-03-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-01-15 19:38:26" itemprop="dateModified" datetime="2019-01-15T19:38:26-08:00">2019-01-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Daily/" itemprop="url" rel="index"><span itemprop="name">Daily</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近跑了两次Irvine， 早上8：50的火车从San Diego出发，到了之后就在Spectrum Center转悠， 下午一点面试，面试完一直晃到六点坐火车回去，也是醉了。 一面就聊了聊天，聊了聊我会啥并且介绍了一下公司历史，然后给了一个Web项目让我做，还挑我没用过的技术，让我用Angular去写前端。回家折腾了三四天就做好了，后端估计半天就写好了，大部分时间都花在学习Angular上面。最后还做了一个PPT讲解一下开发流程和我的架构，整个二面也算是非常顺利。 面完试之后就Uber去之前约的人家看房，700刀包水电还是很不错的，而且房主也很亲和，就差不多定下来了。唯一麻烦的就是上班这件事，如果开车的话一个高速路口就行了，也就10分钟的事情。 回家之后立马开始复习，然后到处po租房信息，要把Westwood的副卧租出去。 剩下的就是准备网课Final 然后等公司给我回复了，说是下周一，希望没啥差错。Good Luck!</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2107,7 +2123,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2171,7 +2187,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Rex&#39;s Blog">
 <meta property="og:description" content="DownloadInstall with. homebrew. Since Kafka uses ZooKeeper, we need to install both. 12$ brew install kafka$ brew intall zookeeper Start ServersZooKeeper server $ zkServer start Kafka server $ kafka-s">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-17T19:36:47.980Z">
+<meta property="og:updated_time" content="2019-02-17T19:38:18.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka and Spring Integration QuickStart">
 <meta name="twitter:description" content="DownloadInstall with. homebrew. Since Kafka uses ZooKeeper, we need to install both. 12$ brew install kafka$ brew intall zookeeper Start ServersZooKeeper server $ zkServer start Kafka server $ kafka-s">
@@ -400,7 +400,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-17 11:36:47" itemprop="dateModified" datetime="2019-02-17T11:36:47-08:00">2019-02-17</time>
+                <time title="Modified: 2019-02-17 11:38:18" itemprop="dateModified" datetime="2019-02-17T11:38:18-08:00">2019-02-17</time>
               
             
           </span>
@@ -476,7 +476,7 @@
 <p>If we inject <code>KafakTemplate</code> directly, it will use the default configurations. Or we can use factory methods to customize properties in Java code: </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProducerConfig</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ProducerFactory&lt;String, String&gt; <span class="title">producerFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; configProps = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, </span><br><span class="line">          bootstrapAddress);</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, </span><br><span class="line">          StringSerializer.class);</span><br><span class="line">        configProps.put(</span><br><span class="line">          ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, </span><br><span class="line">          StringSerializer.class);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultKafkaProducerFactory&lt;&gt;(configProps);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> KafkaTemplate&lt;String, String&gt; <span class="title">kafkaTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> KafkaTemplate&lt;&gt;(producerFactory());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaListenerService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@KafkaListener</span>(topics = &#123;<span class="string">"message"</span>&#125;)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">consume</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Received message: "</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>It’s straightfoward. <code>@KafkaListener</code> specifies which topics to listen to. </p>
+<p>It’s straightfoward. <code>@KafkaListener</code> specifies which topics it’s listening to. </p>
 
       
     </div>
@@ -599,7 +599,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -663,7 +663,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

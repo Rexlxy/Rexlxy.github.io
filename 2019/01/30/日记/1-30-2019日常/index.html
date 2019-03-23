@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因">
+  <meta name="description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后）有的会到达不了后台。原因是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1&#x2F;30&#x2F;2019 日常">
 <meta property="og:url" content="http://yoursite.com/2019/01/30/日记/1-30-2019日常/index.html">
 <meta property="og:site_name" content="Rex&#39;s Blog">
-<meta property="og:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因">
+<meta property="og:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后）有的会到达不了后台。原因是">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-02-17T06:27:02.435Z">
+<meta property="og:updated_time" content="2019-03-10T05:25:47.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1&#x2F;30&#x2F;2019 日常">
-<meta name="twitter:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因">
+<meta name="twitter:description" content="今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后）有的会到达不了后台。原因是">
 
 
 
@@ -399,7 +399,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-16 22:27:02" itemprop="dateModified" datetime="2019-02-16T22:27:02-08:00">2019-02-16</time>
+                <time title="Modified: 2019-03-09 21:25:47" itemprop="dateModified" datetime="2019-03-09T21:25:47-08:00">2019-03-09</time>
               
             
           </span>
@@ -451,7 +451,7 @@
       
 
       
-        <p>今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。<br>然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因是Nignx的Cache，改一下cache规则就好了，也是一个很新奇的bug了。<br>晚上复习了一些设计模式，发现很多都接触过了，也有很多感觉很巧妙。代码写多了，接触的结构多了之后，确实设计模式会容易了解很多。<br>还有一件事，今天没事做看了看那种很多人喜欢用的天猫商城项目的后台代码。感觉好普通啊啊，真的是基础的CRUD，复杂度真的很低。一直以为自己的公司做的项目很LOW，但回头一看，还是向前走了很远了，起码还是领先这些DEMO级别的小项目很多的。<br>晚上看了圆桌派，讲了关于失恋，其中一点确实感悟很深。年轻的时候谈恋爱很容易把自己的一切情感和生活都寄托在另外一方身上，当分手后，那种空虚的感觉席卷而来。心里要清楚的一点是，我们孤独得来到这个世界上，最后也不会跟爱的人一起走，我们首先是作为一个独立的个体存活着，然后爱情就是看缘分和机遇了。保持恋爱/婚姻关系的同时，也要保持独立的自我，自己的爱好，自身的进步。一个蓬勃发展的，丰富多彩的个体，才能与另外一方长久地走下去。<br>晚安</p>
+        <p>今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。<br>然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后）有的会到达不了后台。原因是Nignx的Cache，改一下cache规则就好了，也是一个很新奇的bug了。<br>晚上复习了一些设计模式，发现很多都接触过了，也有很多感觉很巧妙。代码写多了，接触的结构多了之后，确实设计模式会容易了解很多。<br>看了圆桌派，讲的是关于失恋，感悟很深。年轻的时候谈恋爱很容易把自己的一切情感和生活都寄托在另外一方身上，当分手后，那种空虚的感觉席卷而来。心里要清楚的一点是，我们孤独得来到这个世界上，最后也不会跟爱的人一起走，我们首先是作为一个独立的个体存活着，然后爱情就是看缘分和机遇了。保持恋爱/婚姻关系的同时，也要保持独立的自我，自己的爱好，自身的进步。一个蓬勃发展的，丰富多彩的个体，才能与另外一方长久地走下去。<br>晚安</p>
 
       
     </div>
@@ -492,8 +492,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/02/日记/2-2-2019/" rel="prev" title="2/2/2019">
-                2/2/2019 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/07/Java/Server-side Support for Video Streaming/" rel="prev" title="Serverside Support for Video Streaming">
+                Serverside Support for Video Streaming <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -557,7 +557,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -381,7 +381,7 @@
                 
               
 
-              <time title="Created: 2019-03-09 20:34:47 / Modified: 21:19:51" itemprop="dateCreated datePublished" datetime="2019-03-09T20:34:47-08:00">2019-03-09</time>
+              <time title="Created: 2019-03-09 20:34:47 / Modified: 21:41:38" itemprop="dateCreated datePublished" datetime="2019-03-09T20:34:47-08:00">2019-03-09</time>
             
 
             
@@ -450,26 +450,32 @@
 <p><code>reduce (k2, list(v2))  -&gt;  list (v2)</code></p>
 </li>
 </ul>
-<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><h2 id="Execution-Overview"><a href="#Execution-Overview" class="headerlink" title="Execution Overview"></a>Execution Overview</h2><ul>
-<li>automatically partition the input data into a set of  M splits.</li>
-<li><em>Reduce</em> invocations are distributed by partitioning the intermediate key space into R pieces using a partitioning function (e.g., hash(key) mod R)</li>
-</ul>
-<p><img src="/images/MapReduce-Figure-1-Execution-Overview.png" alt="image-20190309205203708"></p>
+<h1 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h1><h2 id="Execution-Overview"><a href="#Execution-Overview" class="headerlink" title="Execution Overview"></a>Execution Overview</h2><p><img src="/images/MapReduce-Figure-1-Execution-Overview.png" alt="image-20190309205203708"></p>
 <p>Overall flow of a MapReduce opeartion:</p>
 <ol>
 <li><strong>User MapReduce program:</strong> Splits the input files into M pieces of typically 16 megabytes to 64 megabytes per piece.</li>
 <li>One of the copies of the program is special - <strong>the maser</strong>. There are <strong>M</strong> map tasks and <strong>R</strong> reduce tasks to assign.</li>
-<li><strong>Map worker</strong> parses key/value pairs out of the input data and passes each pair to the user-defined Map function. The intermediate key/value pairs produced by the  Map function are buffered in memory.</li>
-<li><strong>Map worker:</strong> Buffered pairs are written to local disk, partitioned into R regions by the  partitioning function. The locations of these buffered pairs are passed back to the master. </li>
+<li><strong>Map worker</strong> parses key/value pairs out of the input data and passes each pair to the user-defined <strong>Map function</strong>. The intermediate key/value pairs produced by the  Map function are buffered in memory.</li>
+<li><strong>Map worker:</strong> Buffered pairs are written to local disk, <strong>partitioned into R regions</strong> by the  partitioning function. The locations of these buffered pairs are passed back to the master. </li>
 <li><strong>Reduce worker:</strong> When a reduce woker is notified by the master about these  locations:<ol>
 <li>Uses  <strong>RPC to read the buffered data</strong> from the  local disks of the map workers.</li>
-<li>Sorts all intermediate data by keys to group all occurrences of the same key together.</li>
+<li><strong>Sorts</strong> all intermediate data by keys to group all occurrences of the same key together.</li>
 </ol>
 </li>
-<li>The Reduce worker iterates over the sorted intermediate data and for each key, it passes the key and corresponding set of intermediate values to <strong>the user’s Reduce function</strong>.</li>
+<li>The Reduce worker iterates over the sorted intermediate data and for each key, it passes the key and corresponding set of intermediate values to the user’s <strong>Reduce function</strong>.</li>
 <li>When all map tasks and reduce tasks have been completed,  the master wakes up the user program.</li>
 </ol>
-
+<h2 id="Master-Data-Structures"><a href="#Master-Data-Structures" class="headerlink" title="Master Data Structures"></a>Master Data Structures</h2><ul>
+<li>For each map task and reduce task, it stores <strong>the state</strong> (idle, in-progress, or completed), and <strong>the identity of the worker machine</strong> (for non-idel tasks).</li>
+<li>For each <strong>completed map task</strong>,  the master stores <strong>the locations and sizes</strong> of the R intermediate file regions produced by the map task.</li>
+</ul>
+<h2 id="Fault-Tolearance"><a href="#Fault-Tolearance" class="headerlink" title="Fault Tolearance"></a>Fault Tolearance</h2><h3 id="Worker-Failure"><a href="#Worker-Failure" class="headerlink" title="Worker Failure"></a>Worker Failure</h3><p>The master pings every worker periodically.</p>
+<ul>
+<li>no response  -&gt;  mark as failed</li>
+<li>any map task <strong>completed</strong> by the worker are reset back  to their initial <strong>idle</strong> state.</li>
+<li>any map task or reduce task <strong>in progress</strong> on a failed worker is also reset to <strong>idle</strong> and become eligible for rescheduling.</li>
+</ul>
+<h3 id="Master-Failure"><a href="#Master-Failure" class="headerlink" title="Master Failure"></a>Master Failure</h3>
           
         
       
@@ -686,161 +692,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/02/日记/2-2-2019/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Rex Liu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/pig.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rex's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/02/日记/2-2-2019/" class="post-title-link" itemprop="url">2/2/2019</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-02-02 21:53:53" itemprop="dateCreated datePublished" datetime="2019-02-02T21:53:53-08:00">2019-02-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-17 11:37:37" itemprop="dateModified" datetime="2019-02-17T11:37:37-08:00">2019-02-17</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天是2019年2月2日，距离大年三十还有一天，一个人周六在家也没什么特别的。早上起来看了看有的没的，中午点了份Panini外卖。想起之前就想看波西米亚狂想曲了，下午就把它看了。讲的是Queen乐队的故事，看的时候发现，其中好多歌已经不知不觉都听过了。<br>比较特别的一点是，在Freddie轻轻吟唱起Love Of My Life的时候，我居然忍不住流泪了。人生第一次有这种体验，被一首没听过的歌秒杀了，而且当时还吃着饭，就这么哭了，甚是狼狈。吃完饭，就听着波西米亚狂想曲睡着了，真的是非常奇特的体验。<br>后来想想自己也算是一个伪文艺青年了，不知不觉就去听了很多经典，然后就喜欢去了解乐队背后的故事。乐队毕竟是一帮有才华，有创造力的人聚在一起，他们分分合合的故事特别吸引我。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/30/日记/1-30-2019日常/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -903,7 +754,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-16 22:27:02" itemprop="dateModified" datetime="2019-02-16T22:27:02-08:00">2019-02-16</time>
+                <time title="Modified: 2019-03-09 21:25:47" itemprop="dateModified" datetime="2019-03-09T21:25:47-08:00">2019-03-09</time>
               
             
           </span>
@@ -957,7 +808,7 @@
       
         
           
-            <p>今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。<br>然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后），有的会到达不了后台。原因是Nignx的Cache，改一下cache规则就好了，也是一个很新奇的bug了。<br>晚上复习了一些设计模式，发现很多都接触过了，也有很多感觉很巧妙。代码写多了，接触的结构多了之后，确实设计模式会容易了解很多。<br>还有一件事，今天没事做看了看那种很多人喜欢用的天猫商城项目的后台代码。感觉好普通啊啊，真的是基础的CRUD，复杂度真的很低。一直以为自己的公司做的项目很LOW，但回头一看，还是向前走了很远了，起码还是领先这些DEMO级别的小项目很多的。<br>晚上看了圆桌派，讲了关于失恋，其中一点确实感悟很深。年轻的时候谈恋爱很容易把自己的一切情感和生活都寄托在另外一方身上，当分手后，那种空虚的感觉席卷而来。心里要清楚的一点是，我们孤独得来到这个世界上，最后也不会跟爱的人一起走，我们首先是作为一个独立的个体存活着，然后爱情就是看缘分和机遇了。保持恋爱/婚姻关系的同时，也要保持独立的自我，自己的爱好，自身的进步。一个蓬勃发展的，丰富多彩的个体，才能与另外一方长久地走下去。<br>晚安</p>
+            <p>今天跟Sam解决了password无法reset的问题，原因是用来reset password的token权限不够。之前的代码不知道谁写的，用的用户的token，在服务器端尝试修改只有admin权限的才有用，要从keycloak的tokenManager获取。<br>然后解决了用户session互相影响的问题，短时间内连续的用户session请求（穿透Keycloak服务器之后）有的会到达不了后台。原因是Nignx的Cache，改一下cache规则就好了，也是一个很新奇的bug了。<br>晚上复习了一些设计模式，发现很多都接触过了，也有很多感觉很巧妙。代码写多了，接触的结构多了之后，确实设计模式会容易了解很多。<br>看了圆桌派，讲的是关于失恋，感悟很深。年轻的时候谈恋爱很容易把自己的一切情感和生活都寄托在另外一方身上，当分手后，那种空虚的感觉席卷而来。心里要清楚的一点是，我们孤独得来到这个世界上，最后也不会跟爱的人一起走，我们首先是作为一个独立的个体存活着，然后爱情就是看缘分和机遇了。保持恋爱/婚姻关系的同时，也要保持独立的自我，自己的爱好，自身的进步。一个蓬勃发展的，丰富多彩的个体，才能与另外一方长久地走下去。<br>晚安</p>
 
           
         
@@ -1273,7 +1124,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-15 19:38:26" itemprop="dateModified" datetime="2019-01-15T19:38:26-08:00">2019-01-15</time>
+                <time title="Modified: 2019-03-09 21:25:06" itemprop="dateModified" datetime="2019-03-09T21:25:06-08:00">2019-03-09</time>
               
             
           </span>
@@ -2074,6 +1925,179 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/日记/Irvine求职+近况/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rex Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/pig.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rex's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/03/21/日记/Irvine求职+近况/" class="post-title-link" itemprop="url">Irvine求职+近况</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-21 18:05:05" itemprop="dateCreated datePublished" datetime="2018-03-21T18:05:05-07:00">2018-03-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-09 21:25:14" itemprop="dateModified" datetime="2019-03-09T21:25:14-08:00">2019-03-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Daily/" itemprop="url" rel="index"><span itemprop="name">Daily</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近跑了两次Irvine， 早上8：50的火车从San Diego出发，到了之后就在Spectrum Center转悠， 下午一点面试，面试完一直晃到六点坐火车回去，也是醉了。 一面就聊了聊天，聊了聊我会啥并且介绍了一下公司历史，然后给了一个Web项目让我做，还挑我没用过的技术，让我用Angular去写前端。回家折腾了三四天就做好了，后端估计半天就写好了，大部分时间都花在学习Angular上面。最后还做了一个PPT讲解一下开发流程和我的架构，整个二面也算是非常顺利。 面完试之后就Uber去之前约的人家看房，700刀包水电还是很不错的，而且房主也很亲和，就差不多定下来了。唯一麻烦的就是上班这件事，如果开车的话一个高速路口就行了，也就10分钟的事情。 回家之后立马开始复习，然后到处po租房信息，要把Westwood的副卧租出去。 剩下的就是准备网课Final 然后等公司给我回复了，说是下周一，希望没啥差错。Good Luck!</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2123,7 +2147,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
